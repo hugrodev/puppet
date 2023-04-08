@@ -1,8 +1,9 @@
+import OutilsService from "../services/outilsService";
 import { AccessoireModel } from "./AccessoireModel";
 
 export class PuppetModel {
-    url: string = "./img/puppet/";
-    skin: string = "";
+    private url: string = "./";
+    private skin: string = OutilsService.getRandomNumber(1,5).toString();
 
     private chapeaux: AccessoireModel = new AccessoireModel("chapeaux");
     private cheveux: CheveuxModel = new CheveuxModel();
@@ -17,16 +18,16 @@ export class PuppetModel {
     private corps: AccessoireModel = new AccessoireModel("corps");
 
     getChapeaux(){
-        return this.url + this.chapeaux.getUrl;
+        return this.url + this.chapeaux.getUrl();
     }
     getCheveuxPattes(){
-        return this.url + this.cheveux.pattes.getUrl();
+        return this.url + "cheveux/" + this.cheveux.pattes.getUrl();
     }
     getCheveuxCoupe(){
-        return this.url + this.cheveux.coupe.getUrl();
+        return this.url + "cheveux/" + this.cheveux.coupe.getUrl();
     }
     getOreille(){
-        return this.url + this.skin + "/" + this.oreille.getUrl();
+        return this.url + "skin_" + this.skin + "/" + this.oreille.getUrl();
     }
     getLunettes(){
         return this.url + this.lunettes.getUrl();
@@ -38,7 +39,7 @@ export class PuppetModel {
         return this.url + this.oeill_droit.getUrl();
     }
     getNez(){
-        return this.url + this.skin + "/" + this.nez.getUrl();
+        return this.url + "skin_" + this.skin + "/" + this.nez.getUrl();
     }
     getOeilGauche(){
         return this.url + this.oeil_gauche.getUrl();
@@ -47,10 +48,18 @@ export class PuppetModel {
         return this.url + this.bouche.getUrl();
     }
     getVisage(){
-        return this.url + this.skin + "/" + this.visage.getUrl();
+        return this.url + "skin_" + this.skin + "/" + this.visage.getUrl();
     }
     getCorps(){
-        return this.url + this.skin + "/" + this.corps.getUrl();
+        return this.url + "skin_" + this.skin + "/" + this.corps.getUrl();
+    }
+    setSkin(skin:string){
+        this.skin = skin;
+    }
+
+    static getRandomPuppet(){
+        const puppet = new this();
+        return puppet;
     }
 }
 
