@@ -1,13 +1,18 @@
 class LocalStorageService {
-    static saveItem(key: string, value: string) {
+    static savePuppet(key: string, value: string) {
       localStorage.setItem(key, value);
     }
   
-    static getItem(key: string) {
+    static getPuppet(key: string) {
       return localStorage.getItem(key);
     }
+
+    static getPuppetAffiche() {
+      const puppet = localStorage.getItem("puppet_affiche");
+      return puppet? JSON.parse(puppet): null;
+    }
   
-    static removeItem(key: string) {
+    static removePuppet(key: string) {
       localStorage.removeItem(key);
     }
   }

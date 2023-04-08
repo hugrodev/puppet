@@ -17,40 +17,40 @@ export class PuppetModel {
     private corps: AccessoireModel = new AccessoireModel("corps");
 
     getChapeaux(){
-        return this.url + this.url + this.chapeaux.getUrl;
+        return this.url + this.chapeaux.getUrl;
     }
     getCheveuxPattes(){
-        return this.url + this.url + this.cheveux.pattes.getUrl();
+        return this.url + this.cheveux.pattes.getUrl();
     }
     getCheveuxCoupe(){
-        return this.url + this.url + this.cheveux.coupe.getUrl();
+        return this.url + this.cheveux.coupe.getUrl();
     }
     getOreille(){
-        return this.url + this.url + this.skin + "/" + this.oreille.getUrl();
+        return this.url + this.skin + "/" + this.oreille.getUrl();
     }
     getLunettes(){
-        return this.url + this.url + this.lunettes.getUrl();
+        return this.url + this.lunettes.getUrl();
     }
     getSourcils(){
-        return this.url + this.url + this.sourcils.getUrl();
+        return this.url + this.sourcils.getUrl();
     }
     getOeiDroit(){
-        return this.url + this.url + this.oeill_droit.getUrl();
+        return this.url + this.oeill_droit.getUrl();
     }
     getNez(){
-        return this.url + this.url + this.skin + "/" + this.nez.getUrl();
+        return this.url + this.skin + "/" + this.nez.getUrl();
     }
     getOeilGauche(){
-        return this.url + this.url + this.oeil_gauche.getUrl();
+        return this.url + this.oeil_gauche.getUrl();
     }
     getBouche(){
-        return this.url + this.url + this.bouche.getUrl();
+        return this.url + this.bouche.getUrl();
     }
     getVisage(){
-        return this.url + this.url + this.skin + "/" + this.visage.getUrl();
+        return this.url + this.skin + "/" + this.visage.getUrl();
     }
     getCorps(){
-        return this.url + this.url + this.skin + "/" + this.corps.getUrl();
+        return this.url + this.skin + "/" + this.corps.getUrl();
     }
 }
 
