@@ -1,11 +1,15 @@
 import React, { FC } from 'react';
+import { PuppetModel } from '../../model/PuppetModel';
 import './Puppet.scss';
 
-interface PuppetProps {}
+interface PuppetProps {
+  puppet: PuppetModel;
+}
 
-const Puppet: FC<PuppetProps> = () => (
+
+const Puppet: FC<PuppetProps> = (props) => (
   <div className="Puppet" data-testid="Puppet">
-    Puppet Component
+    <img src="{props.puppet.chapeaux.getUrl()}"/>
   </div>
 );
 
