@@ -1,6 +1,6 @@
 .Home {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
 
@@ -14,10 +14,13 @@
     .home-txt {
         width: 50%;
         height: 100%;
+        display: flex;
+        align-items: center;
     }
 
     .home-first, .home-second {
         display: flex;
         width: 100%;
+        height: 100%;
     }
 }

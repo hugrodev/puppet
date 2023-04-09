@@ -1,21 +1,22 @@
 import OutilsService from "../services/outilsService";
+import CATG_NB from "./AccessoireConst";
 import { AccessoireModel } from "./AccessoireModel";
 
 export class PuppetModel {
     private url: string = "./";
-    private skin: string = OutilsService.getRandomNumber(1,5).toString();
+    private skin: string = OutilsService.getRandomNumber(1,Number(CATG_NB.skin[1])).toString();
 
-    private chapeaux: AccessoireModel = new AccessoireModel("chapeaux");
+    private chapeaux: AccessoireModel = new AccessoireModel(CATG_NB.chapeaux);
     private cheveux: CheveuxModel = new CheveuxModel();
-    private oreille: AccessoireModel = new AccessoireModel("oreille");
-    private lunettes: AccessoireModel = new AccessoireModel("lunettes");
-    private sourcils: AccessoireModel = new AccessoireModel("sourcils");
-    private oeil_gauche: AccessoireModel = new AccessoireModel("oeil_gauche");
-    private nez: AccessoireModel = new AccessoireModel("nez");
-    private oeill_droit: AccessoireModel = new AccessoireModel("oeil_droit");
-    private bouche: AccessoireModel = new AccessoireModel("bouche");
-    private visage: AccessoireModel = new AccessoireModel("visage");
-    private corps: AccessoireModel = new AccessoireModel("corps");
+    private oreille: AccessoireModel = new AccessoireModel(CATG_NB.oreille);
+    private lunettes: AccessoireModel = new AccessoireModel(CATG_NB.lunettes);
+    private sourcils: AccessoireModel = new AccessoireModel(CATG_NB.lunettes);
+    private oeil_gauche: AccessoireModel = new AccessoireModel(CATG_NB.oeil_gauche);
+    private nez: AccessoireModel = new AccessoireModel(CATG_NB.nez);
+    private oeill_droit: AccessoireModel = new AccessoireModel(CATG_NB.oeil_droit);
+    private bouche: AccessoireModel = new AccessoireModel(CATG_NB.bouche);
+    private visage: AccessoireModel = new AccessoireModel(CATG_NB.visage);
+    private corps: AccessoireModel = new AccessoireModel(CATG_NB.corps);
 
     getChapeaux(){
         return this.url + this.chapeaux.getUrl();
@@ -64,14 +65,17 @@ export class PuppetModel {
 }
 
 export class CheveuxModel {
-    nom: string= "cheveux";
-    coupe: AccessoireModel = new AccessoireModel("coupe");
-    pattes: AccessoireModel = new AccessoireModel("pattes");
+    nom: string= CATG_NB.cheveux[0].toString();
+    coupe: AccessoireModel = new AccessoireModel(CATG_NB.coupe);
+    pattes: AccessoireModel = new AccessoireModel(CATG_NB.pattes);
 
     constructor(){
     }
 
     getCoupe(){
+        return this.nom + "/" + this.coupe.getUrl();
+    }
+    getPattes(){
         return this.nom + "/" + this.pattes.getUrl();
     }
 

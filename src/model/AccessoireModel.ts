@@ -1,12 +1,15 @@
 import OutilsService from "../services/outilsService";
+import CATG_NB from "./AccessoireConst";
 
 export class AccessoireModel {
-    constructor(categorie:string) {
-        this.categorie = categorie;
-    }
     private categorie: string = "";
     private couleur: string = "";
     private numero: string = OutilsService.getRandomNumber(1,5).toString();
+
+    constructor(catg: (string | number)[]) {
+        this.categorie =  catg[0].toString();
+        this.numero =   OutilsService.getRandomNumber(1, Number(catg[1]) ).toString();
+    }
 
     setCouleur(couleur: string){
         this.couleur = couleur
@@ -21,6 +24,6 @@ export class AccessoireModel {
     }
 
     getUrl(){
-        return this.categorie + "/" + this.categorie + "_" + this.numero + ".png"; //+ "_" + this.couleur;
+        return this.categorie + "/" + this.numero + ".png"; //+ "_" + this.couleur;
     }
 }
