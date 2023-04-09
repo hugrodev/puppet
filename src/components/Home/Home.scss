@@ -4,6 +4,10 @@
     display: flex;
     flex-direction: column;
 
+    .button.secondary-fill {
+        margin-left: 0;
+    }
+
     .home-img {
         display: flex;
         justify-content: flex-end;
