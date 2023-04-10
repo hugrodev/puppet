@@ -44,19 +44,8 @@ interface HomeProps {}
           </div>
         </div>
         {/* second */}
-        {/* <div className="home-second">
-          <div className="home-img">
-            <Puppet puppet={puppetAffiche} />
-          </div>
-          <div className="home-txt">
-              <div className="txt">
-                <h1> Puppet in the Pocket </h1>
-                <p>Parce que ca fait pas de mal de l’avoir pres de soit</p>
-                <div className="button">Puppet Aléatoire</div>
-                <div className="button">Nouvelle Puppet</div>
-              </div>
-          </div>
-        </div> */}
+        <div className="home-second">
+        </div>
       </div>
     );
   };
