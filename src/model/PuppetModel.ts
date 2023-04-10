@@ -1,5 +1,5 @@
 import OutilsService from "../services/outilsService";
-import CATG_NB from "./AccessoireConst";
+import CATG_NB from "../constantes/AccessoireConst";
 import { AccessoireModel } from "./AccessoireModel";
 
 export class PuppetModel {

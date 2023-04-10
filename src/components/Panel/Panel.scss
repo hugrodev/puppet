@@ -1,2 +1,125 @@
+@import  '../../scss/variables.scss';
+
 .Panel {
+
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    background-color: $primary-color;
+
+    .panel-colors, .panel-catg {
+        width: 100%;
+        height: 10vh;
+        align-items: center;
+        display: inline-flex;
+
+        ::-webkit-scrollbar {
+            background-color: #F5F5F5;
+            width: 8px;
+            border-bottom: 24px;
+          }
+          
+          ::-webkit-scrollbar-thumb {
+            background-color: rgba($primary-color, 0.8);
+            border: 2px solid #F5F5F5;
+            border-bottom: none;
+          }
+    
+          ::-webkit-scrollbar-track {
+            border-radius: 24px;
+          }
+          
+          ::-webkit-scrollbar-thumb {
+            border-radius: 24px;
+          }
+
+          .panel-left-a,
+          .panel-right-a  {
+              width: 5%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              
+              svg {
+                  width: 60%;
+                  height: 60%;
+                  color: white;               
+                  transition: all ease-in-out;
+              }    
+              svg:hover {
+                  width: 80%;
+                  height: 80%;
+                  color: white;
+                  cursor: pointer;
+              }    
+          }
+          .panel-middle-s{
+              width: 90%;    
+              height: fit-content;
+              flex-wrap: inherit;
+              display: flex; 
+              overflow: hidden; 
+          }
+
+    }
+    .panel-colors { 
+        .panel-middle-s{ 
+            background-color: white;
+            border-radius: 24px; 
+
+            span div {
+             margin-top: 1vh !important;
+            }
+        }
+
+        .circle-picker { 
+            width: 100% !important;
+            overflow-x: scroll;
+            flex-wrap: inherit !important;
+            display: flex !important;
+            margin-bottom: initial !important; 
+            justify-content: center !important;
+        }
+        
+    }
+
+    .panel-catg {
+        margin-top: 2vh;
+        .panel-middle-s {
+            overflow-x: scroll;
+
+            div{
+                padding: 1vh;    
+                min-width: 10vh;            
+                text-align: center;
+                border-top-right-radius: 12px;
+                border-top-left-radius: 12px;
+            }
+            .catg-item.select {
+                background-color: rgb(random(255), random(255), random(255));
+            }
+            .catg-item {
+                background-color: white;
+            }
+        }
+    }
+
+    .panel-assets {
+        height: 70%;
+        margin: 0 auto;
+        margin-bottom: 2vh;
+        width: 90%;
+        background-color: white;
+    }
+}
+
+@media only screen and (max-width: 880px) {
+    .Panel {
+        .panel-colors, .panel-catg {
+            margin-top: 0;
+            background-color: $primary-color;
+            border-bottom-left-radius: 24px;
+            border-bottom-right-radius: 24px;
+        }
+    }
 }

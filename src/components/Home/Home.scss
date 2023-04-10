@@ -2,18 +2,29 @@
     width: 100%;
     height: 100vh;
     display: flex;
+    align-items: center;
 
     .button.secondary-fill {
         margin-left: 0;
     }
 
+    .home-img {
+        width: 40%;
+    }
+
     .home-img,
-    .home-txt {
-        width: 50%;
+    .home-txt,
+    .home-panel {
+        width: 60%;
         height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+
+    .home-panel {
+        height: 85%;
+        margin-right: 2vh;
     }
 
     .home-img {
@@ -26,9 +37,16 @@
         flex-direction: column;
 
         .home-img,
-        .home-txt {
+        .home-txt,
+        .home-panel {
             width: 100%;
             justify-content: center;
+            margin-right: 0;
+            align-items: flex-start;
+        }
+
+        .home-panel {
+            height: 100vh;
         }
 
         .home-txt .txt {
