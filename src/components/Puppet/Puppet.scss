@@ -5,11 +5,7 @@
     height: 100%;
 
     img {
-        width: 100%;
-        max-width: 800px;
-        position: absolute;
-        bottom: 50px;
-        left: 0;
-
+        top: initial;
+        bottom: 0;
     }
 }

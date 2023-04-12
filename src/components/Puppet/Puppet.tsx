@@ -1,26 +1,39 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { PuppetModel } from '../../model/PuppetModel';
 import './Puppet.scss';
+import CATG_NB from '../../constantes/AccessoireConst';
+import { AccessoireModel } from '../../model/AccessoireModel';
+import { Color, Solver } from '../../services/outilsColor';
+import Accessoire from '../AccessoireModel/Accessoire';
 
 interface PuppetProps {
   puppet: PuppetModel;
 }
 
+const Puppet: FC<PuppetProps> = (props) => {
+  let zIndex = Object.keys(CATG_NB).length * 2;  
 
-const Puppet: FC<PuppetProps> = (props) => (
-  <div className="Puppet" data-testid="Puppet">
-    <img src={props.puppet.getChapeaux()}/>
-    <img src={props.puppet.getCheveuxCoupe()}/>
-    <img src={props.puppet.getOreille()}/>
-    <img src={props.puppet.getCheveuxPattes()}/>
-    <img src={props.puppet.getLunettes()}/>
-    <img src={props.puppet.getSourcils()} />
-    <img src={props.puppet.getOeilGauche()} />
-    <img src={props.puppet.getNez()} />
-    <img src={props.puppet.getOeiDroit()} />
-    <img src={props.puppet.getBouche()} />
-    <img src={props.puppet.getCorps()} />
-  </div>
-);
+  return (
+    <div className="Puppet" data-testid="Puppet">
+      {Object.keys(CATG_NB).map((key) => {
+        const category = CATG_NB[key];
+        if (props.puppet[category.nom as keyof PuppetModel] instanceof AccessoireModel) {
+          //recuperation de l'accessoire
+          const accessoire = props.puppet[category.nom as keyof PuppetModel] as AccessoireModel; 
+          
+          if (accessoire) {
+            zIndex = zIndex - 2;  
+            return (
+              <React.Fragment key={category.nom}>
+                <Accessoire accessoire={accessoire} zIndex={zIndex}></Accessoire> 
+              </React.Fragment>
+            );
+          }
+        }
+        return null;
+      })}
+    </div>
+  );
+};
 
 export default Puppet;

@@ -6,6 +6,7 @@
     height: 100%;
     border-radius: 24px;
     background-color: $primary-color;
+    box-shadow: 1px 2px 9px rgba($primary-color, 0.8);
 
     .panel-colors, .panel-catg {
         width: 100%;
@@ -16,12 +17,11 @@
         ::-webkit-scrollbar {
             background-color: #F5F5F5;
             width: 8px;
-            border-bottom: 24px;
+            border-radius: 24px; 
           }
           
           ::-webkit-scrollbar-thumb {
-            background-color: rgba($primary-color, 0.8);
-            border: 2px solid #F5F5F5;
+            background-color: rgba($primary-color, 0.8); 
             border-bottom: none;
           }
     
@@ -44,7 +44,7 @@
                   width: 60%;
                   height: 60%;
                   color: white;               
-                  transition: all ease-in-out;
+                  transition: transform 0.5s ease-out;
               }    
               svg:hover {
                   width: 80%;
@@ -62,24 +62,7 @@
           }
 
     }
-    .panel-colors { 
-        .panel-middle-s{ 
-            background-color: white;
-            border-radius: 24px; 
-
-            span div {
-             margin-top: 1vh !important;
-            }
-        }
-
-        .circle-picker { 
-            width: 100% !important;
-            overflow-x: scroll;
-            flex-wrap: inherit !important;
-            display: flex !important;
-            margin-bottom: initial !important; 
-            justify-content: center !important;
-        }
+    .panel-colors {  
         
     }
 
@@ -94,22 +77,44 @@
                 text-align: center;
                 border-top-right-radius: 12px;
                 border-top-left-radius: 12px;
-            }
-            .catg-item.select {
-                background-color: rgb(random(255), random(255), random(255));
-            }
+            } 
             .catg-item {
                 background-color: white;
+                transition: transform 0.2s ease-out;
+            }
+            .catg-item:hover {
+                cursor: pointer; 
+                transform: scale(1.2); 
+            }
+            .active {
+                background-color: $primary-color;
+                border-radius: 24px 24px 0 0;
+                color: white;
+                transform: scale(1.2); 
             }
         }
     }
 
     .panel-assets {
         height: 70%;
+        max-height: 70%;
         margin: 0 auto;
         margin-bottom: 2vh;
         width: 90%;
         background-color: white;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        display: flex;
+        flex-wrap: wrap;
+
+        .div-assets {
+            display: flex;
+            justify-content: flex-start;
+            width: 33%;
+            height: 33%;
+            position: relative; 
+        }
+        
     }
 }
 
@@ -118,8 +123,22 @@
         .panel-colors, .panel-catg {
             margin-top: 0;
             background-color: $primary-color;
-            border-bottom-left-radius: 24px;
-            border-bottom-right-radius: 24px;
+        }
+        .panel-assets {
+            height: 35vh;
+            margin: auto;    
+            justify-content: center;
+
+            .div-assets {
+                justify-content: left;
+                flex-basis: 28%;
+                overflow: hidden;
+                img {
+                    width: 100%;
+                    height: 100%; 
+                    transform: scale(1.1);
+                }
+            }
         }
     }
 }

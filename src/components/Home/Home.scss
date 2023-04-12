@@ -35,18 +35,17 @@
 @media only screen and (max-width: 880px) {
     .Home {
         flex-direction: column;
+        height: auto;
+        
 
         .home-img,
         .home-txt,
         .home-panel {
             width: 100%;
+            height: 50vh;
             justify-content: center;
             margin-right: 0;
             align-items: flex-start;
-        }
-
-        .home-panel {
-            height: 100vh;
         }
 
         .home-txt .txt {

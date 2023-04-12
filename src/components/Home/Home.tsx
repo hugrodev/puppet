@@ -3,12 +3,13 @@ import { PuppetModel } from '../../model/PuppetModel';
 import LocalStorageService from '../../services/storageService';
 import Puppet from '../Puppet/Puppet';
 import './Home.scss';
-import Panel from '../Panel/Pannel';
+import Panel from '../Panel/Panel';
 
 interface HomeProps {}
 
   const Home: FC<HomeProps> = () => {
     const [puppetAffiche, setPuppetAffiche] = useState(getPuppetFromStore());
+
   
     function getPuppetFromStore(){
       let puppet: PuppetModel = LocalStorageService.getPuppetAffiche();
@@ -16,10 +17,14 @@ interface HomeProps {}
         puppet = PuppetModel.getRandomPuppet();
       }
       return puppet;
-    }
-  
+    } 
+
     function setRandomPuppet(){
       setPuppetAffiche(PuppetModel.getRandomPuppet());
+    } 
+
+    function handlePuppetChange(puppet: PuppetModel){
+      setPuppetAffiche(puppet);
     } 
   
     return (
@@ -41,10 +46,10 @@ interface HomeProps {}
                     <div className="button__vertical"></div></div>
                 </div>
               </div>
-          </div> */}
+          </div>  */}
           {/* panel */}
           <div className="home-panel">
-            <Panel puppet={puppetAffiche}></Panel>
+            <Panel puppet={puppetAffiche} onPuppetChange={handlePuppetChange} ></Panel>
           </div>
       </div>
     );

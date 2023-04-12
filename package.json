@@ -44,7 +44,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-color": "^3.0.6",
+    "@types/react-color": "^3.0.6", 
     "sass": "^1.61.0",
     "sass-loader": "^13.2.2"
   }
