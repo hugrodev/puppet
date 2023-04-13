@@ -7,6 +7,7 @@ import OutilsHtmlService from '../../services/outilsHtml';
 import CATG_NB, { Category_Item } from '../../constantes/AccessoireConst';
 import { AccessoireModel } from '../../model/AccessoireModel';
 import Accessoire from '../AccessoireModel/Accessoire';
+import { Color } from '../../services/outilsColor';
 
 interface PanelProps {
   puppet: PuppetModel;
@@ -16,14 +17,15 @@ interface PanelProps {
 const Panel: FC<PanelProps> = (props) => {
 
   // UTILS
-  const colorsScrollable = useRef<HTMLDivElement>(null);
   const catgScrollable = useRef<HTMLDivElement>(null);
   const [catgImgList, setCatgImgList] = useState<AccessoireModel[]>([]);
   const [activeCatg, setActiveCatg] = useState<string>('');
+  const [activeColor, setActiveColor] = useState<string>(''); 
+
+  const puppet: PuppetModel = props.puppet;  
 
   function handleCatgClick(key : string){
     loadCatg(key);
-    setActiveCatg(key);
   }
 
   function handleImgClick(accessoire : AccessoireModel){ 
@@ -31,7 +33,7 @@ const Panel: FC<PanelProps> = (props) => {
 
     if(category){ 
       // on fait un clone pour etre sur de la detection de changements
-      const nouveauPuppet = props.puppet.clone();
+      const nouveauPuppet: PuppetModel = puppet.clone();
 
       // la skin modifie l'origine du repertoire pour toutes les images enfants
         (nouveauPuppet[category as keyof PuppetModel] as AccessoireModel) = accessoire;
@@ -43,21 +45,33 @@ const Panel: FC<PanelProps> = (props) => {
 
   // Charge les images de la catégorie passée en parametre
   function loadCatg(const_catg: string){
-    const catg: Category_Item = CATG_NB[const_catg];
-    const imgList: AccessoireModel[] = [];
-  
-    for(let i=1; i <= catg.nbImg; i++){
-      const accessoireKey: keyof PuppetModel = catg.nom as keyof PuppetModel;
-      if(props.puppet[accessoireKey] instanceof AccessoireModel){
-        const accessoire: AccessoireModel = props.puppet[accessoireKey] as AccessoireModel;
-        imgList.push(new AccessoireModel(catg,  accessoire.getSkinFilter(), i.toString(),accessoire.getCouleurFilter()));
+    if(CATG_NB[activeCatg]){ 
+      setActiveCatg(const_catg);
+
+      const imgList: AccessoireModel[] = [];
+      const catgActive = CATG_NB[const_catg]; 
+    
+      for(let i=1; i <= catgActive.nbImg; i++){
+        const accessoireKey: keyof PuppetModel = catgActive.nom as keyof PuppetModel;
+        if(puppet[accessoireKey] instanceof AccessoireModel){
+          const accessoire: AccessoireModel = puppet[accessoireKey] as AccessoireModel;
+          imgList.push(new AccessoireModel(catgActive,  accessoire.getSkinFilter(), i.toString(),accessoire.getCouleurFilter()));
+        }
       }
+      setCatgImgList(imgList);
     }
-    setCatgImgList(imgList);
   }
   
   const changeColor = (color: string) => {
-    console.log(color);
+    setActiveColor(color); 
+    const catgActive = CATG_NB[activeCatg];
+    console.log(catgActive);
+    const accessoire: AccessoireModel = puppet[catgActive.nom as keyof PuppetModel] as AccessoireModel;
+    accessoire.setCouleurFilter(Color.getFilterFromHex(color));
+    
+    // on lance les methode de refresh des elements
+    handleImgClick(accessoire);
+    loadCatg(catgActive.nom);
   };
   
   
@@ -113,15 +127,18 @@ const Panel: FC<PanelProps> = (props) => {
 
       {/* COULEURS */}
       <div className="panel-colors" id="scrollable-content">
-          <div className="panel-left-a" onClick={()=> {OutilsHtmlService.handleLeftArrowClick(colorsScrollable) }}>
+          {/* <div className="panel-left-a" onClick={()=> {OutilsHtmlService.handleLeftArrowClick(colorsScrollable) }}>
           <MdArrowBackIosNew />
+        </div> */}
+       { 
+       activeCatg && CATG_NB[activeCatg].color &&
+       <div className="panel-middle-s">
+          <HuePicker onChangeComplete={(color) => changeColor(color.hex)} color={activeColor} />
         </div>
-        <div className="panel-middle-s" ref={colorsScrollable}>
-          <HuePicker onChangeComplete={(color) => changeColor(color.hex)} />
-        </div>
-          <div className="panel-right-a" onClick={()=> { OutilsHtmlService.handleRightArrowClick(colorsScrollable) }}>
+       } 
+          {/* <div className="panel-right-a" onClick={()=> { OutilsHtmlService.handleRightArrowClick(colorsScrollable) }}>
           <MdArrowForwardIos />
-        </div>
+        </div> */}
       </div>
     </div>
   );

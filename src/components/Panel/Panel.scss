@@ -63,7 +63,23 @@
 
     }
     .panel-colors {  
-        
+        .panel-middle-s {
+            width: 80%;
+            margin: 0 auto;
+            overflow: visible;
+            border-radius: 23px;
+        }
+        .hue-picker {
+            position: relative;
+            width: 100% !important;
+            border-radius: 23px; 
+
+            .hue-horizontal {
+                width: 100%;  
+            border-radius: 24px;
+            }
+
+        }
     }
 
     .panel-catg {

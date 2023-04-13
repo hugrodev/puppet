@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { PuppetModel } from '../../model/PuppetModel';
 import LocalStorageService from '../../services/storageService';
 import Puppet from '../Puppet/Puppet';
@@ -8,10 +8,10 @@ import Panel from '../Panel/Panel';
 interface HomeProps {}
 
   const Home: FC<HomeProps> = () => {
-    const [puppetAffiche, setPuppetAffiche] = useState(getPuppetFromStore());
+    const [puppetAffiche, setPuppetAffiche] = useState<PuppetModel>(getPuppetFromStore());
 
-  
     function getPuppetFromStore(){
+        console.log("ok")
       let puppet: PuppetModel = LocalStorageService.getPuppetAffiche();
       if(puppet == null) {
         puppet = PuppetModel.getRandomPuppet();
@@ -19,19 +19,15 @@ interface HomeProps {}
       return puppet;
     } 
 
-    function setRandomPuppet(){
-      setPuppetAffiche(PuppetModel.getRandomPuppet());
-    } 
-
     function handlePuppetChange(puppet: PuppetModel){
       setPuppetAffiche(puppet);
-    } 
+    }  
   
     return (
       <div className="Home">
         {/* first */}
           <div className="home-img">
-            <Puppet puppet={puppetAffiche} />
+            {puppetAffiche && <Puppet puppet={puppetAffiche} />}
           </div>
           {/* <div className="home-txt">
               <div className="txt">
@@ -49,7 +45,7 @@ interface HomeProps {}
           </div>  */}
           {/* panel */}
           <div className="home-panel">
-            <Panel puppet={puppetAffiche} onPuppetChange={handlePuppetChange} ></Panel>
+          {puppetAffiche && <Panel puppet={puppetAffiche} onPuppetChange={handlePuppetChange} ></Panel>}
           </div>
       </div>
     );

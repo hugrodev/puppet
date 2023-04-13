@@ -9,6 +9,7 @@ export class Color {
     this.g = this.clamp(g);
     this.b = this.clamp(b); 
   }
+  
 
   static getRandomHexColor(){
     return '#' + Math.floor(Math.random() * 16777215).toString(16);

@@ -19,6 +19,10 @@ const Accessoire: FC<AccessoireProps> = (props) => {
   const srcColor = accessoire.getUrlColor();
   const srcSkin = accessoire.getUrlSkin();
 
+  const handleImageError = (event: any) => {
+    event.target.style.display = 'none'; // masquer l'image
+  };
+
   if (src) {
     zIndex = zIndex - 3; 
     const colorStyle = {
@@ -35,18 +39,21 @@ const Accessoire: FC<AccessoireProps> = (props) => {
         <img
           className='first-img'
           src={src}
+          onError={handleImageError}
           alt={category.nom}
           style={{ zIndex }}
         />
         <img
         className='color-img'
           src={srcColor}
+          onError={handleImageError}
           alt={`${category.nom} color `}
           style={ colorStyle } 
         />
         <img
         className='skin-img'
           src={srcSkin}
+          onError={handleImageError}
           alt={`${category.nom} color `}
           style={ skinStyle } 
         />

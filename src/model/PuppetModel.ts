@@ -30,7 +30,7 @@ export class PuppetModel {
     
 
     static getRandomPuppet(){
-        const puppet = new this();
+        const puppet = new this(); 
         return puppet;
     }
 
