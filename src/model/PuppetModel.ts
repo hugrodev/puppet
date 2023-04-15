@@ -20,20 +20,35 @@ export class PuppetModel {
     public visage: AccessoireModel = new AccessoireModel(CATG_NB.visage, this.skinFilter);
     public corps: AccessoireModel = new AccessoireModel(CATG_NB.corps, this.skinFilter);
 
+    constructor(){ 
+    }
+
     getSkin(){
         return this.skin;
     }
 
     setSkin(skin:string){
         this.skin = skin;
+        let skinFilter = Color.getFilterFromHex(this.skin);
+        this.setSkinFilter(skinFilter);
+        this.chapeaux.setSkinFilter(skinFilter);
+        this.coupe.setSkinFilter(skinFilter);
+        this.oreille.setSkinFilter(skinFilter);
+        this.pattes.setSkinFilter(skinFilter);
+        this.lunettes.setSkinFilter(skinFilter);
+        this.sourcils.setSkinFilter(skinFilter);
+        this.oeil_gauche.setSkinFilter(skinFilter);
+        this.nez.setSkinFilter(skinFilter);
+        this.oeil_droit.setSkinFilter(skinFilter);
+        this.bouche.setSkinFilter(skinFilter);
+        this.visage.setSkinFilter(skinFilter);
+        this.corps.setSkinFilter(skinFilter);
+    }
+
+    setSkinFilter(skinFilter: string){
+        this.skinFilter = skinFilter;
     }
     
-
-    static getRandomPuppet(){
-        const puppet = new this(); 
-        return puppet;
-    }
-
     clone(): PuppetModel {
         const puppet = new PuppetModel();
         puppet.url = this.url;

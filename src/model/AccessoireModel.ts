@@ -5,13 +5,23 @@ import { Color, Solver } from "../services/outilsColor";
 export class AccessoireModel {
     private categorie: Category_Item;
 
+    //format hexa
+    private couleur: string = ""; 
     // format css car les couleurs sont affiché grace au filtre 
-    private couleurFilter: string = "";  
+    private couleurFilter: string = "";   
     private skinFilter: string= "";
 
     private numero: string = "";
 
-    constructor(catg: Category_Item, skinFilter: string, numero?: string,   colorFilter?: string) {
+    /**
+     * 
+     * @param catg 
+     * @param skinFilter 
+     * @param numero 
+     * @param colorFilter optional
+     * @param color optional, if colorfilter present required
+     */
+    constructor(catg: Category_Item, skinFilter: string, numero?: string,   colorFilter?: string, color ?: string) {
         this.categorie =  catg;
         this.skinFilter = skinFilter;
 
@@ -20,30 +30,44 @@ export class AccessoireModel {
         }else{
             this.numero = OutilsService.getRandomNumber(1,5).toString();
         }
-        if(colorFilter){
+        if(colorFilter && color){ 
+            this.couleur = color;
             this.couleurFilter = colorFilter;
         }else {
-            this.setCouleurFilter(Color.getFilterFromHex(Color.getRandomHexColor()));
+            this.setCouleur(Color.getRandomHexColor());
         }
     } 
 
     /**
      * 
-     * @param couleur Attend une couleur en hexadecimal, la transforme en css
+     * @param couleurFilter
      */
     setCouleurFilter(couleur: string){        
         this.couleurFilter = couleur;
     }
     /**
      * 
-     * @param couleur Attend une couleur en hexadecimal, la transforme en css
+     * @param filter
      */
     setSkinFilter(filter: string){        
-        this.couleurFilter = filter;
+        this.skinFilter = filter;
     }
 
     getCouleurFilter(){
         return this.couleurFilter;
+    }
+
+    /**
+     * 
+     * @param couleur hexadecimal
+     */
+    setCouleur (couleur: string){        
+        this.couleur = couleur;
+        this.setCouleurFilter(Color.getFilterFromHex(this.couleur));
+    }
+
+    getCouleur(){
+        return this.couleur;
     }
 
     getCategorie(){
@@ -73,7 +97,7 @@ export class AccessoireModel {
     }
 
     clone(): AccessoireModel {
-        const clone = new AccessoireModel(this.categorie,  this.skinFilter, this.numero, this.couleurFilter);  
+        const clone = new AccessoireModel(this.categorie,  this.skinFilter, this.numero, this.couleurFilter, this.couleur);  
         return clone;
     }
 }

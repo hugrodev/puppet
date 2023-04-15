@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { PuppetModel } from '../../model/PuppetModel';
 import './Accessoire.scss';
 import CATG_NB from '../../constantes/AccessoireConst';
@@ -10,56 +10,82 @@ interface AccessoireProps {
   zIndex: number;
 }
 
-const Accessoire: FC<AccessoireProps> = (props) => {
-  let zIndex = props.zIndex; 
+const Accessoire: FC<AccessoireProps> = (props) => {  
 
   const accessoire: AccessoireModel = props.accessoire;
   const category = accessoire.getCategorie();
-  const src = accessoire.getUrl();
-  const srcColor = accessoire.getUrlColor();
-  const srcSkin = accessoire.getUrlSkin();
-
-  const handleImageError = (event: any) => {
-    event.target.style.display = 'none'; // masquer l'image
+  const [src, setSrc] = useState(accessoire.getUrl());
+  const [srcColor, setSrcColor] = useState(accessoire.getUrlColor());
+  const [srcSkin, setSrcSkin] = useState(accessoire.getUrlSkin());
+  const [displayFirstImg, setDisplayFirstImg] = useState(false);
+  const [displayColorImg, setDisplayColorImg] = useState(false);
+  const [displaySkinImg, setDisplaySkinImg] = useState(false); 
+ 
+  const checkImageExiste = (url: string, setDisplayImg: (value: boolean) => void) => {
+    const img = new Image();
+    img.src = url;
+    img.onload = () => {
+      setDisplayImg(true);
+    };
+    img.onerror = () => {
+      setDisplayImg(false);
+    };
   };
 
-  if (src) {
-    zIndex = zIndex - 3; 
+  useEffect(() => {
+    setSrc(accessoire.getUrl());
+    setSrcColor(accessoire.getUrlColor());
+    setSrcSkin(accessoire.getUrlSkin());
+  }, [accessoire]);
+
+  useEffect(() => {
+    checkImageExiste(src, setDisplayFirstImg);
+  }, [src]);
+
+  useEffect(() => {
+    checkImageExiste(srcColor, setDisplayColorImg);
+  }, [srcColor]);
+
+  useEffect(() => {
+    checkImageExiste(srcSkin, setDisplaySkinImg);
+  }, [srcSkin]);
+ 
+  if (displayFirstImg) {
+    const zIndex = props.zIndex - 3;
     const colorStyle = {
       zIndex: zIndex - 2,
-      filter: accessoire.getCouleurFilter()
-    }; 
+      filter: accessoire.getCouleurFilter(),
+      display: displayColorImg ? 'block' : 'none',
+    };
     const skinStyle = {
       zIndex: zIndex - 1,
-      filter: accessoire.getCouleurFilter()
-    }; 
+      filter: accessoire.getSkinFilter(),
+      display: displaySkinImg ? 'block' : 'none',
+    };
 
     return (
       <React.Fragment key={category.nom}>
         <img
           className='first-img'
-          src={src}
-          onError={handleImageError}
+          src={src} 
           alt={category.nom}
           style={{ zIndex }}
         />
         <img
-        className='color-img'
-          src={srcColor}
-          onError={handleImageError}
+          className='color-img'
+          src={srcColor} 
           alt={`${category.nom} color `}
-          style={ colorStyle } 
+          style={colorStyle}
         />
         <img
-        className='skin-img'
-          src={srcSkin}
-          onError={handleImageError}
+          className='skin-img'
+          src={srcSkin} 
           alt={`${category.nom} color `}
-          style={ skinStyle } 
+          style={skinStyle}
         />
       </React.Fragment>
     );
-  } 
+  }
   return null;
 };
 

@@ -11,7 +11,7 @@ interface PuppetProps {
 }
 
 const Puppet: FC<PuppetProps> = (props) => {
-  let zIndex = Object.keys(CATG_NB).length * 2;  
+  let zIndex = Object.keys(CATG_NB).length * 3;  
 
   return (
     <div className="Puppet" data-testid="Puppet">
@@ -20,9 +20,9 @@ const Puppet: FC<PuppetProps> = (props) => {
         if (props.puppet[category.nom as keyof PuppetModel] instanceof AccessoireModel) {
           //recuperation de l'accessoire
           const accessoire = props.puppet[category.nom as keyof PuppetModel] as AccessoireModel; 
-          
+
           if (accessoire) {
-            zIndex = zIndex - 2;  
+            zIndex = zIndex - 3;  
             return (
               <React.Fragment key={category.nom}>
                 <Accessoire accessoire={accessoire} zIndex={zIndex}></Accessoire> 

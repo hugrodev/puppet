@@ -9,3 +9,10 @@
         bottom: 0;
     }
 }
+
+@media only screen and (max-width: 880px) {
+    .Puppet {
+        max-width: 50vh;
+    }
+    
+}
