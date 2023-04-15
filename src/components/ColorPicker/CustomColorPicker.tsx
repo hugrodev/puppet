@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { ChromePicker } from 'react-color';
 import { MdClose } from 'react-icons/md';
 import './CustomColorPicker.scss';
@@ -10,6 +10,7 @@ interface ColorPickerProps {
 }
 
 const CustomColorPicker: FC<ColorPickerProps> = ({ color, onChange, onHide }) => {
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleColorChange = (color: any) => {
     onChange(color.hex);
@@ -19,8 +20,21 @@ const CustomColorPicker: FC<ColorPickerProps> = ({ color, onChange, onHide }) =>
     onHide();
   };
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (ref.current && !ref.current.contains(event.target as Node)) {
+      onHide();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="custom-color-picker">
+    <div ref={ref} className="custom-color-picker">
       <div className="color-picker-container">
         <div className="close-button" onClick={handleClose}>
           <MdClose />

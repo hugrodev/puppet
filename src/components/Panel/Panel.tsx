@@ -12,6 +12,7 @@ import CustomColorPicker from '../ColorPicker/CustomColorPicker';
 interface PanelProps {
   puppet: PuppetModel;
   onPuppetChange: (puppet: PuppetModel) => void;
+  onHide: () => void;
 }
 
 const Panel: FC<PanelProps> = (props) => {
@@ -22,16 +23,16 @@ const Panel: FC<PanelProps> = (props) => {
   const [activeCatg, setActiveCatg] = useState<string>('');
   const [activeColor, setActiveColor] = useState<string>(''); 
   const [activeSkin, setActiveSkin] = useState<string>(''); 
-  const [showColorPicker, setShowColorPicker] = useState(false)
+  const [showColorPicker, setShowColorPicker] = useState(false);
 
   const puppet: PuppetModel = props.puppet;  
 
   function handleCatgClick(key : string){
     loadCatg(key);
-  }
+  } 
 
-  const handleButtonColorClick = () => {
-    setShowColorPicker(true);
+  const hidePanel = () => {
+    props.onHide();
   };
 
   function handleImgClick(accessoire : AccessoireModel){ 
@@ -156,7 +157,7 @@ const Panel: FC<PanelProps> = (props) => {
         <div className="color-button" onClick={()=>{setShowColorPicker(true)}}>X</div> 
         } 
 
-        <div className="close-button">X</div>
+        <div className="close-button" onClick={hidePanel} >X</div>
         <div className="empty-navbar"></div>
 
       </div>

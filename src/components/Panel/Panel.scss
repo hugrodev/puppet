@@ -79,6 +79,7 @@
     .panel-navbar {
         height: 5%;
         display: flex;
+        z-index: 100;
         align-items: center;
         place-content: flex-end; 
 
@@ -115,8 +116,8 @@
 
             .div-assets { 
                 width: 25%;
-                min-width: 15vh;
-                min-height: 15vh;
+                min-width: 13vh;
+                min-height: 13vh;
                 max-width: 33vh;
                 max-height: 33vh;
                 height: 33%;
@@ -184,6 +185,12 @@
         border-radius: 0px;
         .panel-colors, .panel-catg {
             margin-top: 0;
+        }
+        .panel-colors { 
+            position: absolute;
+            width: 200px;
+            right: 10% !important;
+            top: 55% !important;
         }
         .panel-assets {  
             .list-assets, .skin-assets {
