@@ -66,19 +66,19 @@ const Accessoire: FC<AccessoireProps> = (props) => {
     return (
       <React.Fragment key={category.nom}>
         <img
-          className='first-img'
+          className='accessoire-img first-img'
           src={src} 
           alt={category.nom}
           style={{ zIndex }}
         />
         <img
-          className='color-img'
+          className='accessoire-img color-img'
           src={srcColor} 
           alt={`${category.nom} color `}
           style={colorStyle}
         />
         <img
-          className='skin-img'
+          className='accessoire-img skin-img'
           src={srcSkin} 
           alt={`${category.nom} color `}
           style={skinStyle}

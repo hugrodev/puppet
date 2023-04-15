@@ -3,7 +3,7 @@ import { PuppetModel } from '../../model/PuppetModel';
 import LocalStorageService from '../../services/storageService';
 import Puppet from '../Puppet/Puppet';
 import './Home.scss';
-import Panel from '../Panel/Panel';
+import Panel from '../Panel/Panel'; 
 
 interface HomeProps {}
 
@@ -27,6 +27,7 @@ const Home: FC<HomeProps> = () => {
   return (
     <div className="Home">
       {/* first */}
+      <div className="first">
         <div className="home-img">
           {puppetAffiche && <Puppet puppet={puppetAffiche} />}
         </div>
@@ -45,12 +46,18 @@ const Home: FC<HomeProps> = () => {
             </div>
         </div> }
         {/* panel */}
-        {
+          {
           showPanel &&
-          <div className="home-panel">
-          {puppetAffiche && <Panel puppet={puppetAffiche} onPuppetChange={handlePuppetChange} onHide={() => setShowPanel(false)} ></Panel>}
-          </div>
-        }
+            <div className="popup home-panel">
+              {puppetAffiche && <Panel puppet={puppetAffiche} onPuppetChange={handlePuppetChange} onHide={() => setShowPanel(false)} ></Panel>}
+            </div> 
+          }
+      </div>
+      <div className='second'>
+        <div className='home-img'>
+          <img src="./hugo.png"></img>
+        </div>
+      </div>
     </div>
   );
 };

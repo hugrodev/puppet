@@ -1,5 +1,9 @@
 @import  'variables';
 
+body {
+	overflow-x: hidden;
+}
+
 .flex {
     display: flex;
 }
@@ -108,6 +112,41 @@
   
   ::-webkit-scrollbar-thumb {
 	border-radius: 24px;
+  }
+
+//   ANIMATIONS
+.fadeIn {
+	animation-name: fadeIn;
+	animation-duration: 1s;
+	animation-timing-function: ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+	0% {
+	  opacity: 0;
+	}
+	100% {
+	  opacity: 1;
+	}
+  }
+
+  .popup {
+	animation: popping 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  }
+  
+  @keyframes popping {
+	0% {
+	  transform: scale(0);
+	  opacity: 0;
+	}
+	70% {
+	  transform: scale(1.1);
+	  opacity: 1;
+	}
+	100% {
+	  transform: scale(1);
+	  opacity: 1;
+	}
   }
   
 @media only screen and (max-width: 768px) {

@@ -1,13 +1,16 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
-import { MdArrowBackIosNew, MdArrowForwardIos } from 'react-icons/md';
-import { ChromePicker, SketchPicker } from 'react-color';
+import { FC, useEffect, useRef, useState } from 'react';
+import { SketchPicker } from 'react-color';
 import './Panel.scss';
 import { PuppetModel } from '../../model/PuppetModel';
 import OutilsHtmlService from '../../services/outilsHtml';
 import CATG_NB from '../../constantes/AccessoireConst';
+import { skinColors } from '../../constantes/SkinColorConst';
 import { AccessoireModel } from '../../model/AccessoireModel';
 import Accessoire from '../AccessoireModel/Accessoire';  
 import CustomColorPicker from '../ColorPicker/CustomColorPicker';
+import { MdArrowBackIosNew, MdArrowForwardIos, MdClose, MdPalette } from 'react-icons/md'; 
+import { CiPalette } from 'react-icons/ci'; 
+import Draggable from 'react-draggable';
 
 interface PanelProps {
   puppet: PuppetModel;
@@ -134,10 +137,13 @@ const Panel: FC<PanelProps> = (props) => {
   }, []);
 
   return (
+    
+  <Draggable handle=".draggable-navbar">
     <div className="Panel" data-testid="Panel">
 
       <div className="panel-navbar">
         
+        <div className="draggable-navbar"  style={  {width:"80%", height: "100%" } } ></div>
         
         {/* COULEURS */} 
         { 
@@ -154,11 +160,10 @@ const Panel: FC<PanelProps> = (props) => {
           }  
         { 
           activeCatg && CATG_NB[activeCatg].color &&
-        <div className="color-button" onClick={()=>{setShowColorPicker(true)}}>X</div> 
+        <div className={`panel ${CATG_NB[activeCatg].color ? 'popup color-button' : ''}`} onClick={()=>{setShowColorPicker(true)}}><MdPalette color={activeColor} /></div> 
         } 
 
-        <div className="close-button" onClick={hidePanel} >X</div>
-        <div className="empty-navbar"></div>
+        <div className="close-button" onClick={hidePanel} ><MdClose color="white" /></div>
 
       </div>
 
@@ -182,6 +187,7 @@ const Panel: FC<PanelProps> = (props) => {
             <SketchPicker
               disableAlpha={true}
               onChangeComplete={(color: any) => changeSkin(color.hex)}
+              presetColors={skinColors}
               color={activeSkin} 
             /> 
             </div>
@@ -193,6 +199,7 @@ const Panel: FC<PanelProps> = (props) => {
       </div> 
 
     </div>
+    </Draggable>
   );
 };
 

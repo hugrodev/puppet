@@ -1,8 +1,9 @@
 .Puppet {
-    position: relative;
     width: 100%;
     margin: auto;
     height: 100%;
+    display: flex;
+    justify-content: center;
 
     img {
         top: initial;
