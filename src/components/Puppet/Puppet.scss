@@ -1,17 +1,15 @@
+@import  '../../scss/variables.scss';
+
 .Puppet {
     width: 100%;
     margin: auto;
     height: 100%;
     display: flex;
     justify-content: center;
-
-    img {
-        top: initial;
-        bottom: 0;
-    }
+ 
 }
 
-@media only screen and (max-width: 880px) {
+@media only screen and (max-width: $breakpoint-md) {
     .Puppet {
         max-width: 50vh;
     }

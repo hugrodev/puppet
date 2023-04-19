@@ -27,8 +27,9 @@ export class AccessoireModel {
 
         if(numero) {
             this.numero = numero;
-        }else{
-            this.numero = OutilsService.getRandomNumber(1,5).toString();
+        }else if( catg && catg.nbImg && catg.nbImg > 1) {
+            this.numero = OutilsService.getRandomNumber(1,catg.nbImg).toString();
+        } else if(catg == null){ 
         }
         if(colorFilter && color){ 
             this.couleur = color;

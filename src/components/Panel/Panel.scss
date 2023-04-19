@@ -1,4 +1,4 @@
-@import  '../../scss/variables.scss';
+@import '../../scss/variables.scss';
 
 .Panel {
 
@@ -7,11 +7,10 @@
     height: 80vh;
     max-height: 100%;
     border-radius: 24px;
-    background-color: $primary-color;
-    box-shadow: 1px 2px 9px rgba($primary-color, 0.8);
     z-index: 200;
 
-    .panel-colors, .panel-catg {
+    .panel-colors,
+    .panel-catg {
         width: 100%;
         height: 15%;
         z-index: 5;
@@ -19,60 +18,65 @@
         display: inline-flex;
 
 
-          .panel-left-a,
-          .panel-right-a  {
-              width: 5%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              
-              svg {
-                  width: 60%;
-                  height: 60%;
-                  color: white;               
-                  transition: transform 0.5s ease-out;
-              }    
-              svg:hover {
-                  width: 80%;
-                  height: 80%;
-                  color: white;
-                  cursor: pointer;
-              }    
-          }
-          .panel-middle-s{
-              width: 90%;    
-              height: fit-content;
-              flex-wrap: inherit;
-              display: flex; 
-              overflow: hidden; 
-          }
+        .panel-left-a,
+        .panel-right-a {
+            width: 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    } 
+            svg {
+                width: 60%;
+                height: 60%;
+                color: white;
+                transition: transform 0.5s ease-out;
+            }
 
-    .panel-catg { 
+            svg:hover {
+                width: 80%;
+                height: 80%;
+                color: white;
+                cursor: pointer;
+            }
+        }
+
+        .panel-middle-s {
+            width: 90%;
+            height: fit-content;
+            flex-wrap: inherit;
+            display: flex;
+            overflow: hidden;
+        }
+
+    }
+
+    .panel-catg {
         .panel-middle-s {
             overflow-x: scroll;
 
-            div{
-                padding: 1vh;    
-                min-width: 10vh;            
+            div {
+                padding: 1vh;
+                min-width: 10vh;
                 text-align: center;
                 border-top-right-radius: 12px;
                 border-top-left-radius: 12px;
-            } 
+            }
+
             .catg-item {
-                background-color: white;
                 transition: transform 0.2s ease-out;
+                color: white;
             }
+
             .catg-item:hover {
-                cursor: pointer; 
-                transform: scale(1.2); 
+                cursor: pointer;
+                transform: scale(1.2);
             }
+
             .active {
                 background-color: $primary-color;
                 border-radius: 24px 24px 0 0;
                 color: white;
-                transform: scale(1.2); 
+                transform: scale(1.2);
             }
         }
     }
@@ -83,11 +87,12 @@
         display: flex;
         z-index: 100;
         align-items: center;
-        place-content: flex-end; 
+        place-content: flex-end;
         transition: fadeIn 0.5s ease-in-out;
 
-        .close-button, .color-button {
-            width: 5%; 
+        .close-button,
+        .color-button {
+            width: 5%;
             justify-content: center;
             display: flex;
             cursor: pointer;
@@ -97,14 +102,14 @@
                 transition: transform 0.3s ease-in-out;
                 height: 80%;
             }
-            
+
             &:hover svg {
                 transform: scale(1.2);
                 filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
             }
-        } 
+        }
 
-        .panel-colors { 
+        .panel-colors {
             position: absolute;
             width: 200px;
             right: 5%;
@@ -125,7 +130,7 @@
     }
 
     .panel-assets {
-        height: 75%; 
+        height: 75%;
         margin: 0 auto;
         margin-bottom: 2vh;
         width: 90%;
@@ -134,27 +139,36 @@
         overflow-y: scroll;
         display: flex;
         flex-wrap: wrap;
+        box-shadow:
+            inset -5px 5px 5px -5px rgba(0, 0, 0, 0.75),
+            inset 5px 5px 5px -5px rgba(0, 0, 0, 0.75),
+            inset 0px -5px 5px -5px rgba(0, 0, 0, 0);
 
-        .list-assets, .skin-assets {
-            width: 100%; 
+        .list-assets,
+        .skin-assets {
+            width: 100%;
             display: flex;
-            justify-content: flex-start;  
+            justify-content: flex-start;
             align-content: flex-start;
-            flex-wrap: wrap;   
+            flex-wrap: wrap;
 
-            .div-assets { 
-                width: 25%;
+            .div-assets {
                 min-width: 13vh;
                 min-height: 13vh;
                 max-width: 33vh;
                 max-height: 33vh;
-                height: 33%;
-                position: relative; 
+                width: 13vw;
+                height: 13vw;
+                justify-content: space-between;
+                position: relative;
                 border-radius: 2px;
+
                 // zoom
                 &.active img {
                     transform: scale(1.1);
+                    -webkit-transform: scale(1.1);
                     transition: all 0.3s ease-in-out;
+                    -webkit-transition: all 0.3s ease-in-out;
                 }
 
                 // border
@@ -167,21 +181,22 @@
                 width: fit-content !important;
                 padding-left: 3vw !important;
                 padding-right: 3vw !important;
-                margin: auto;                            
-                background: initial !important; 
+                margin: auto;
+                background: initial !important;
                 box-shadow: none !important;
                 z-index: 100;
 
 
-                > div:nth-child(2) {
+                >div:nth-child(2) {
                     padding-top: 1vh;
                     padding-bottom: 1vh;
                 }
-                > div:nth-child(3) {
+
+                >div:nth-child(3) {
                     display: none !important;
                 }
-                
-                > div:first-child { 
+
+                >div:first-child {
                     width: 30vh !important;
                     margin: auto;
                     height: 30vh !important;
@@ -191,6 +206,7 @@
                 .flexbox-fix {
                     text-align: center;
                     justify-content: center;
+                    margin-top: 1vh;
 
                     input {
                         text-align: center;
@@ -200,45 +216,63 @@
 
         }
 
+        .list-assets {
+            justify-content: space-between;
+        }
+
         .skin-assets {
             align-content: center;
         }
-        
+
     }
-    
+
+    .flexbox-fix {
+        margin-top: 1vh;
+    }
+
 }
 
-@media only screen and (max-width: 880px) {
+@media only screen and (max-width: $breakpoint-md) {
     .Panel {
         border-radius: 0px;
-        .panel-colors, .panel-catg {
+
+        .panel-colors,
+        .panel-catg {
             margin-top: 0;
         }
-        .panel-colors { 
+
+        .panel-colors {
             position: absolute;
             width: 200px;
-            right: 10% !important;
+            right: 15% !important;
+            top: 25% !important;
         }
 
-        .close-button, .color-button {
+        .close-button,
+        .color-button {
             width: 10% !important;
         }
-        .panel-assets {  
-            .list-assets, .skin-assets {
+
+        .panel-assets {
+
+            .list-assets,
+            .skin-assets {
                 .div-assets {
                     width: 20vw !important;
                     height: 20vw !important;
+
                     img {
                         width: 100%;
-                        height: 100%;  
+                        height: 100%;
                     }
                 }
-                .sketch-picker { 
-                    > div:first-child { 
+
+                .sketch-picker {
+                    >div:first-child {
                         width: 100% !important;
-                        height: 20vh !important;  
-                        width: 20vh !important;  
-                    } 
+                        height: 20vh !important;
+                        width: 20vh !important;
+                    }
                 }
             }
         }

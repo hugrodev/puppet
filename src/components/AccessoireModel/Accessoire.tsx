@@ -1,92 +1,84 @@
 import React, { FC, useState, useEffect } from 'react';
-import { PuppetModel } from '../../model/PuppetModel';
 import './Accessoire.scss';
-import CATG_NB from '../../constantes/AccessoireConst';
 import { AccessoireModel } from '../../model/AccessoireModel';
-import { Color, Solver } from '../../services/outilsColor';
 
 interface AccessoireProps {
   accessoire: AccessoireModel;
   zIndex: number;
 }
 
-const Accessoire: FC<AccessoireProps> = (props) => {  
+const Accessoire: FC<AccessoireProps> = (props) => {
 
   const accessoire: AccessoireModel = props.accessoire;
   const category = accessoire.getCategorie();
   const [src, setSrc] = useState(accessoire.getUrl());
   const [srcColor, setSrcColor] = useState(accessoire.getUrlColor());
   const [srcSkin, setSrcSkin] = useState(accessoire.getUrlSkin());
-  const [displayFirstImg, setDisplayFirstImg] = useState(false);
-  const [displayColorImg, setDisplayColorImg] = useState(false);
-  const [displaySkinImg, setDisplaySkinImg] = useState(false); 
- 
-  const checkImageExiste = (url: string, setDisplayImg: (value: boolean) => void) => {
+  const [imgExists, setImgExists] = useState({ src: false, srcColor: false, srcSkin: false });
+
+  const checkImageExists = (url: string, callback: (exists: boolean) => void) => {
     const img = new Image();
+    img.onload = () => callback(true);
+    img.onerror = () => callback(false);
     img.src = url;
-    img.onload = () => {
-      setDisplayImg(true);
-    };
-    img.onerror = () => {
-      setDisplayImg(false);
-    };
+  };
+
+  const updateImageStates = () => {
+    const newSrc = accessoire.getUrl();
+    const newSrcColor = accessoire.getUrlColor();
+    const newSrcSkin = accessoire.getUrlSkin();
+
+    setSrc(newSrc);
+    setSrcColor(newSrcColor);
+    setSrcSkin(newSrcSkin);
+
+    checkImageExists(newSrc, (exists) => setImgExists((prev) => ({ ...prev, src: exists })));
+    checkImageExists(newSrcColor, (exists) => setImgExists((prev) => ({ ...prev, srcColor: exists })));
+    checkImageExists(newSrcSkin, (exists) => setImgExists((prev) => ({ ...prev, srcSkin: exists })));
   };
 
   useEffect(() => {
-    setSrc(accessoire.getUrl());
-    setSrcColor(accessoire.getUrlColor());
-    setSrcSkin(accessoire.getUrlSkin());
+    updateImageStates();
   }, [accessoire]);
 
-  useEffect(() => {
-    checkImageExiste(src, setDisplayFirstImg);
-  }, [src]);
+  const zIndex = props.zIndex - 3;
+  const colorStyle = {
+    zIndex: zIndex - 1,
+    filter: accessoire.getCouleurFilter(),
+  };
+  const skinStyle = {
+    zIndex: zIndex - 2,
+    filter: accessoire.getSkinFilter(),
+  };
 
-  useEffect(() => {
-    checkImageExiste(srcColor, setDisplayColorImg);
-  }, [srcColor]);
-
-  useEffect(() => {
-    checkImageExiste(srcSkin, setDisplaySkinImg);
-  }, [srcSkin]);
- 
-  if (displayFirstImg) {
-    const zIndex = props.zIndex - 3;
-    const colorStyle = {
-      zIndex: zIndex - 2,
-      filter: accessoire.getCouleurFilter(),
-      display: displayColorImg ? 'block' : 'none',
-    };
-    const skinStyle = {
-      zIndex: zIndex - 1,
-      filter: accessoire.getSkinFilter(),
-      display: displaySkinImg ? 'block' : 'none',
-    };
-
-    return (
-      <React.Fragment key={category.nom}>
+  return (
+    <React.Fragment key={category.nom}>
+      {imgExists.src && (
         <img
           className='accessoire-img first-img'
-          src={src} 
+          src={src}
           alt={category.nom}
           style={{ zIndex }}
         />
+      )}
+      {imgExists.srcColor && (
         <img
           className='accessoire-img color-img'
-          src={srcColor} 
+          src={srcColor}
           alt={`${category.nom} color `}
           style={colorStyle}
         />
+      )}
+      {imgExists.srcSkin && (
         <img
           className='accessoire-img skin-img'
-          src={srcSkin} 
+          src={srcSkin}
           alt={`${category.nom} color `}
           style={skinStyle}
         />
-      </React.Fragment>
-    );
-  }
-  return null;
+      )}
+    </React.Fragment>
+  );
 };
 
 export default Accessoire;

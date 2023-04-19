@@ -11,6 +11,7 @@ import CustomColorPicker from '../ColorPicker/CustomColorPicker';
 import { MdArrowBackIosNew, MdArrowForwardIos, MdClose, MdPalette } from 'react-icons/md'; 
 import { CiPalette } from 'react-icons/ci'; 
 import Draggable from 'react-draggable';
+import OutilsService from '../../services/outilsService';
 
 interface PanelProps {
   puppet: PuppetModel;
@@ -30,8 +31,11 @@ const Panel: FC<PanelProps> = (props) => {
 
   const puppet: PuppetModel = props.puppet;  
 
-  function handleCatgClick(key : string){
+  function handleCatgClick(key : string, classNum: string){
+    console.log(classNum)
+    OutilsHtmlService.activeColor(classNum);
     loadCatg(key);
+
   } 
 
   const hidePanel = () => {
@@ -111,12 +115,12 @@ const Panel: FC<PanelProps> = (props) => {
   
  
   //HTML
-  const catg_keys = Object.keys(CATG_NB);
-  const category_item = catg_keys.map((catg_key) => (
-    <div className={`catg-item ${activeCatg === catg_key ? ' active' : ''}`} key={catg_key} onClick={() => handleCatgClick(catg_key)} >
+  const catg_keys = Object.keys(CATG_NB); 
+  const category_item = catg_keys.map((catg_key, index) => (
+    <div className={`catg-item ${activeCatg === catg_key ? ' active' : ''} color-${index + 1}`} key={catg_key} onClick={() => handleCatgClick(catg_key, (index +1).toString())}>
       {catg_key.toString()}
     </div>
-  )); 
+  ));
 
   const catg_accessoires = catgImgList.map((accessoire, index) => (
     <div

@@ -1,3 +1,6 @@
+import { skinColors } from "../constantes/SkinColorConst";
+import OutilsService from "./outilsService";
+
 export class Color {
 
   public r: number;
@@ -15,12 +18,21 @@ export class Color {
     return '#' + Math.floor(Math.random() * 16777215).toString(16);
   }
 
+  static getRandomSkinColor(){
+    let res = skinColors[OutilsService.getRandomNumber(0, skinColors.length)] 
+    return res;
+  }
+
   static getFilterFromHex(colorHex: string){;
-    const rgb: number[] = Color.hexToRgb(colorHex);
-    const color = new Color(rgb[0], rgb[1], rgb[2]);
-    const solver = new Solver(color);
-    const result = solver.solve();  
-    return result.filter;
+    if(colorHex){
+      const rgb: number[] = Color.hexToRgb(colorHex);
+      const color = new Color(rgb[0], rgb[1], rgb[2]);
+      const solver = new Solver(color);
+      const result = solver.solve();  
+      return result.filter;
+    } else {
+      return "";
+    }
   }
 
   

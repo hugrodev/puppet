@@ -1,4 +1,6 @@
-.Home { 
+@import '../../scss/variables.scss';
+
+.Home {
 
     display: flex;
     width: 100%;
@@ -10,26 +12,26 @@
         height: 100vh;
         display: flex;
         align-items: center;
-    
-    
-        .button.secondary-fill {
-            margin-left: 0;
+
+
+        .buttons {
+            margin-right: 2vw;
         }
-    
+
         .home-img {
-            width: 50%;
+            width: 50vw;
         }
-    
+
         .home-img,
         .home-txt,
         .home-panel {
-            width: 50%;
+            width: 50vw;
             height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
         }
-    
+
         .home-panel {
             height: 100%;
             margin-right: 2vh;
@@ -37,63 +39,130 @@
             width: 45%;
             margin-right: 5%;
         }
-    
+
         .home-img {
             justify-content: flex-end;
+
+            img {
+                bottom: 0;
+                max-width: 80vh;
+            }
         }
-    
+
         .home-txt {
             justify-content: flex-start;
+            margin-left: 5vw;
+
+            .txt {
+                max-width: 60%;
+            }
         }
     }
 
     .second {
         width: 100%;
+        height: 100vh;
+        display: flex;
+        text-align: center;
 
         .home-img {
-            width: 50%;
+            width: 50vw;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+
             img {
                 width: 100%;
+                position: absolute;
+                max-width: 80vh;
+            }
+
+            .hugo-puppet {
+                width: 14vh;
+                position: relative;
+                display: flex;
+                left: 29vh;
+                top: 46%;
+            }
+
+        }
+
+        .home-txt {
+            justify-content: flex-start;
+            margin-left: 5vw;
+            width: 50vw;
+
+            .txt {
+                margin-top: 25vh;
+                text-align: left;
+                max-width: 60%;
             }
         }
     }
 }
 
-@media only screen and (max-width: 880px) {
+@media only screen and (max-width: $breakpoint-md) {
     .Home {
-        
-        .first, .second { 
-        flex-direction: column;
-        height: auto;
-        
 
-        .home-img,
-        .home-txt,
-        .home-panel {
-            width: 100%; 
-            justify-content: center;
-            margin-right: 0;
-            align-items: flex-start;
+        .first,
+        .second {
+            flex-direction: column;
+            height: 100vh;
+
+
+            .home-img,
+            .home-txt,
+            .home-panel {
+                width: 100%;
+                justify-content: center;
+                margin-right: 0;
+                align-items: flex-start;
+            }
+
+            .home-img {
+                height: 45vh;
+                order: 2;
+
+                img {
+                    max-width: 45vh;
+                }
+            }
+
+            .home-txt,
+            .home-panel {
+                height: 55vh;
+                order: 1;
+            }
+
+            .home-txt .txt {
+                width: 80%;
+                margin: auto;
+                text-align: center;
+            }
         }
 
-        .home-img { 
-            height: 45vh;
-        }
-        
-        .home-txt,
-        .home-panel {
-            height: 55vh;
+        .second {
+            .home-img {
+                order: 1 !important;
+
+
+                .hugo-puppet {
+                    width: 8vh;
+                    left: 16vh;
+                    top: 57%;
+                }
+            }
+
+            .home-txt,
+            .home-panel {
+                order: 2 !important;
+            }
+
+
         }
 
-        .home-txt .txt {
-            width: 80%;
-            margin: auto;
-            text-align: center;
+        .button.secondary-fill {
+            margin-left: 2vh !important;
         }
     }
-
-    .button.secondary-fill {
-        margin-left: 2vh !important;
-    }
-}
 }

@@ -1,0 +1,74 @@
+@import './variables.scss';
+
+body {
+  background-color: #FFFFFF;
+}
+
+@each $value,
+$color,
+$filter in $colors {
+  html.color-#{$value} {
+
+    img.background-image {
+      filter: $filter;
+      -webkit-filter: $filter;
+      transition: filter 0.3s ease-out;
+      -webkit-transition: filter 0.3s ease-out;
+    }
+
+    .blob-btn {
+      color: $color;
+
+      &:before {
+        border: $color;
+      }
+
+      &__blob {
+        background: $color;
+      }
+
+      &:hover {
+        color: #FFFFFF;
+      }
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: rgba(white, 0.8);
+    }
+
+    ::-webkit-scrollbar {
+      background-color: $color;
+    }
+
+    .Panel {
+      background-color: $color;
+      transition: backdrop-filter 0.3s ease-out;
+      box-shadow: 1px 2px 9px rgba($color, 0.8);
+
+      .panel-catg {
+        .panel-middle-s {
+          .active {
+            background-color: $color;
+          }
+        }
+      }
+
+      .panel-assets {
+
+        .list-assets,
+        .skin-assets {
+          .div-assets {
+            &.active {
+              box-shadow: 0 0 5px 2px rgba($color, 0.8);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .Panel .panel-catg .panel-middle-s .catg-item.color-#{$value} {
+    background-color: $color;
+  }
+
+}

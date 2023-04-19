@@ -4,7 +4,7 @@ import { AccessoireModel } from "./AccessoireModel";
 
 export class PuppetModel {
     public url: string = "./";
-    public skin: string = Color.getRandomHexColor();
+    public skin: string = Color.getRandomSkinColor();
     public skinFilter: string = Color.getFilterFromHex(this.skin);
 
     public chapeaux: AccessoireModel = new AccessoireModel(CATG_NB.chapeaux, this.skinFilter); 
