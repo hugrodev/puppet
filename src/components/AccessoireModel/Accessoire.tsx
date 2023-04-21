@@ -23,23 +23,43 @@ const Accessoire: FC<AccessoireProps> = (props) => {
     img.src = url;
   };
 
+  const updateImageSkinStates = () => {
+    const newSrcSkin = accessoire.getUrlSkin();
+    setSrcSkin(newSrcSkin);
+    checkImageExists(newSrcSkin, (exists) => setImgExists((prev) => ({ ...prev, srcSkin: exists })));
+  };
+  const updateImageColorStates = () => {
+    const newSrcColor = accessoire.getUrlColor();
+    setSrcColor(newSrcColor);
+    checkImageExists(newSrcColor, (exists) => setImgExists((prev) => ({ ...prev, srcColor: exists })));
+  };
   const updateImageStates = () => {
     const newSrc = accessoire.getUrl();
-    const newSrcColor = accessoire.getUrlColor();
-    const newSrcSkin = accessoire.getUrlSkin();
-
     setSrc(newSrc);
-    setSrcColor(newSrcColor);
-    setSrcSkin(newSrcSkin);
-
     checkImageExists(newSrc, (exists) => setImgExists((prev) => ({ ...prev, src: exists })));
-    checkImageExists(newSrcColor, (exists) => setImgExists((prev) => ({ ...prev, srcColor: exists })));
-    checkImageExists(newSrcSkin, (exists) => setImgExists((prev) => ({ ...prev, srcSkin: exists })));
+    updateImageColorStates();
+    updateImageSkinStates();
   };
 
   useEffect(() => {
+    updateImageSkinStates();
+    console.log("skin")
+  }, [accessoire.getSkinFilter()]);
+
+  useEffect(() => {
+    updateImageColorStates();
+    console.log("color")
+  }, [accessoire.getCouleurFilter()]);
+
+  useEffect(() => {
     updateImageStates();
-  }, [accessoire]);
+    console.log("img")
+  }, [accessoire.getUrl()]);
+
+  // useEffect(() => {
+  //   updateImageStates();
+  //   console.log("all")
+  // }, [accessoire.getUrl()]);
 
   const zIndex = props.zIndex - 3;
   const colorStyle = {
