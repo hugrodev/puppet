@@ -6,12 +6,11 @@ import OutilsHtmlService from '../../services/outilsHtml';
 import CATG_NB from '../../constantes/AccessoireConst';
 import { skinColors } from '../../constantes/SkinColorConst';
 import { AccessoireModel } from '../../model/AccessoireModel';
-import Accessoire from '../AccessoireModel/Accessoire';  
+import Accessoire from '../AccessoireModel/Accessoire';
 import CustomColorPicker from '../ColorPicker/CustomColorPicker';
-import { MdArrowBackIosNew, MdArrowForwardIos, MdClose, MdPalette } from 'react-icons/md'; 
-import { CiPalette } from 'react-icons/ci'; 
+import { MdArrowBackIosNew, MdArrowForwardIos, MdClose, MdPalette } from 'react-icons/md';
 import Draggable from 'react-draggable';
-import OutilsService from '../../services/outilsService';
+import { primaryColors } from '../../constantes/ColorConst';
 
 interface PanelProps {
   puppet: PuppetModel;
@@ -25,72 +24,79 @@ const Panel: FC<PanelProps> = (props) => {
   const catgScrollable = useRef<HTMLDivElement>(null);
   const [catgImgList, setCatgImgList] = useState<AccessoireModel[]>([]);
   const [activeCatg, setActiveCatg] = useState<string>('');
-  const [activeColor, setActiveColor] = useState<string>(''); 
-  const [activeSkin, setActiveSkin] = useState<string>(''); 
+  const [activeColor, setActiveColor] = useState<string>('');
+  const [activeSkin, setActiveSkin] = useState<string>('');
   const [showColorPicker, setShowColorPicker] = useState(false);
 
-  const puppet: PuppetModel = props.puppet;  
+  const puppet: PuppetModel = props.puppet;
 
-  function handleCatgClick(key : string, classNum: string){
-    console.log(classNum)
+  function handleCatgClick(key: string, classNum: string) {
     OutilsHtmlService.activeColor(classNum);
     loadCatg(key);
 
-  } 
+  }
 
   const hidePanel = () => {
     props.onHide();
   };
 
-  function handleImgClick(accessoire : AccessoireModel){ 
-    const category = accessoire.getCategorie().nom; 
+  function handleImgClick(accessoire: AccessoireModel) {
+    const category = accessoire.getCategorie().nom;
 
-    if(category){ 
+    if (category) {
       // on fait un clone pour etre sur de la detection de changements
       const nouveauPuppet: PuppetModel = puppet.clone();
 
       // la skin modifie l'origine du repertoire pour toutes les images enfants
-      (nouveauPuppet[category as keyof PuppetModel] as AccessoireModel) = accessoire; 
+      (nouveauPuppet[category as keyof PuppetModel] as AccessoireModel) = accessoire;
       //on notifie la modif
       props.onPuppetChange(nouveauPuppet);
-    } 
+    }
+  }
+
+  function handleNoneImgClick() {
+    // on fait un clone pour etre sur de la detection de changements
+    (puppet[activeCatg as keyof PuppetModel] as AccessoireModel) = new AccessoireModel(CATG_NB[activeCatg], puppet.skinFilter, "0");
+    const nouveauPuppet: PuppetModel = puppet.clone();
+    //on notifie la modif
+    props.onPuppetChange(nouveauPuppet);
   }
 
   // Charge les images de la catégorie passée en parametre
-  function loadCatg(const_catg: string){
-    if(CATG_NB[activeCatg]){       
+  function loadCatg(const_catg: string) {
+    if (CATG_NB[activeCatg]) {
       setActiveCatg(const_catg);
       const imgList: AccessoireModel[] = [];
-      const catgActive = CATG_NB[const_catg]; 
+      const catgActive = CATG_NB[const_catg];
       const accessoireKey: keyof PuppetModel = catgActive.nom as keyof PuppetModel;
-    
-      if( puppet[accessoireKey] instanceof AccessoireModel){
-        const accessoire: AccessoireModel = puppet[accessoireKey] as AccessoireModel; 
-        for(let i=1; i <= catgActive.nbImg; i++){
-          imgList.push(new AccessoireModel(catgActive,  accessoire.getSkinFilter(), i.toString(), accessoire.getCouleurFilter(), accessoire.getCouleur()));
+
+      if (puppet[accessoireKey] instanceof AccessoireModel) {
+        const accessoire: AccessoireModel = puppet[accessoireKey] as AccessoireModel;
+        for (let i = 1; i <= catgActive.nbImg; i++) {
+          imgList.push(new AccessoireModel(catgActive, accessoire.getSkinFilter(), i.toString(), accessoire.getCouleurFilter(), accessoire.getCouleur()));
         }
         setCatgImgList(imgList);
         setActiveColor(accessoire.getCouleur());
       } else {
         setCatgImgList([]);
-        if(catgActive == CATG_NB.skin){ 
+        if (catgActive == CATG_NB.skin) {
           // pannel skin
         }
 
       }
     }
   }
-  
-  const changeColor = (color: any) => {  
-    const catgActive = CATG_NB[activeCatg]; 
+
+  const changeColor = (color: any) => {
+    const catgActive = CATG_NB[activeCatg];
     const accessoire: AccessoireModel = puppet[catgActive.nom as keyof PuppetModel] as AccessoireModel;
-    accessoire.setCouleur(color); 
-    
+    accessoire.setCouleur(color);
+
     // on lance les methode de refresh des elements
     handleImgClick(accessoire);
     //
     //loadCatg(catgActive.nom);
-    
+
     // Mise à jour de la couleur de chaque composant Accessoire dans catgImgList
     setCatgImgList(prevCatgImgList => {
       const newCatgImgList = prevCatgImgList.map((accessoire: AccessoireModel) => {
@@ -100,24 +106,24 @@ const Panel: FC<PanelProps> = (props) => {
       return newCatgImgList;
     });
 
-    setActiveColor(color); 
+    setActiveColor(color);
   };
 
-  const changeSkin = (color: any) => {  
+  const changeSkin = (color: any) => {
     setActiveSkin(color);
-    puppet.setSkin(color);  
+    puppet.setSkin(color);
     // on fait un clone pour etre sur de la detection de changements
-    const nouveauPuppet: PuppetModel = puppet.clone(); 
+    const nouveauPuppet: PuppetModel = puppet.clone();
     props.onPuppetChange(nouveauPuppet);
   };
-  
-  
-  
- 
+
+
+
+
   //HTML
-  const catg_keys = Object.keys(CATG_NB); 
+  const catg_keys = Object.keys(CATG_NB);
   const category_item = catg_keys.map((catg_key, index) => (
-    <div className={`catg-item ${activeCatg === catg_key ? ' active' : ''} color-${index + 1}`} key={catg_key} onClick={() => handleCatgClick(catg_key, (index +1).toString())}>
+    <div className={`catg-item ${activeCatg === catg_key ? ' active' : ''} color-${index + 1}`} key={catg_key} onClick={() => handleCatgClick(catg_key, (index + 1).toString())}>
       {catg_key.toString()}
     </div>
   ));
@@ -128,81 +134,104 @@ const Panel: FC<PanelProps> = (props) => {
       className={`div-assets ${accessoire.getNumero() === (puppet[activeCatg as keyof PuppetModel] as AccessoireModel).getNumero().toString() ? 'active' : ''}`}
       onClick={() => handleImgClick(accessoire)}
     >
-      <Accessoire key={index} accessoire={accessoire} zIndex={(index + 1) * 5} />
+      <Accessoire key={index} accessoire={accessoire} zIndex={(index + 1) * 5} style={accessoire.getCategorie().style} />
     </div>
   ));
-  
-  
-  
-  useEffect(() => { 
+
+  const handleColorClick = (color: string) => {
+    changeColor(color);
+  }
+
+
+
+  useEffect(() => {
     loadCatg(CATG_NB.skin.nom);
     setActiveCatg(CATG_NB.skin.nom);
     setActiveSkin(puppet.getSkin());
   }, []);
 
   return (
-    
-  <Draggable handle=".draggable-navbar">
-    <div className="Panel" data-testid="Panel">
 
-      <div className="panel-navbar">
-        
-        <div className="draggable-navbar"  style={  {width:"80%", height: "100%" } } ></div>
-        
-        {/* COULEURS */} 
-        { 
-        activeCatg && CATG_NB[activeCatg].color && showColorPicker &&
-          <div className="panel-colors" id="scrollable-content">  
-                {showColorPicker && (
-                <CustomColorPicker
-                  color={activeColor}
-                  onChange={(color: string) => changeColor(color)}
-                  onHide={() => setShowColorPicker(false)}
-                />
-              )}
-            </div>
-          }  
-        { 
-          activeCatg && CATG_NB[activeCatg].color &&
-        <div className={`panel ${CATG_NB[activeCatg].color ? 'popup color-button' : ''}`} onClick={()=>{setShowColorPicker(true)}}><MdPalette color={activeColor} /></div> 
-        } 
+    <Draggable handle=".draggable-navbar">
+      <div className="Panel" data-testid="Panel">
 
-        <div className="close-button" onClick={hidePanel} ><MdClose color="white" /></div>
+        <div className="panel-navbar">
 
-      </div>
+          <div className="draggable-navbar" style={{ width: "80%", height: "100%" }} ></div>
 
-      {/* CATG_NAV */}
-      <div className="panel-catg" id="scrollable-content">
-        <div className="panel-left-a" onClick={()=> {OutilsHtmlService.handleLeftArrowClick(catgScrollable) }}>
-          <MdArrowBackIosNew />
+          {/* COULEURS */}
+          <div className="close-button" onClick={hidePanel} ><MdClose color="white" /></div>
+
         </div>
-        <div className="panel-middle-s" ref={catgScrollable}>
-          {category_item}
-        </div>
-        <div className="panel-right-a" onClick={()=> { OutilsHtmlService.handleRightArrowClick(catgScrollable) }}>
-          <MdArrowForwardIos />
-        </div>
-      </div> 
 
-      {/* LISTE ACCESSOIRE */}
-      <div className="panel-assets">  
-          {activeCatg === CATG_NB.skin.nom ? ( 
+        {/* CATG_NAV */}
+        <div className="panel-catg" id="scrollable-content">
+          <div className="panel-left-a" onClick={() => { OutilsHtmlService.handleLeftArrowClick(catgScrollable) }}>
+            <MdArrowBackIosNew />
+          </div>
+          <div className="panel-middle-s" ref={catgScrollable}>
+            {category_item}
+          </div>
+          <div className="panel-right-a" onClick={() => { OutilsHtmlService.handleRightArrowClick(catgScrollable) }}>
+            <MdArrowForwardIos />
+          </div>
+        </div>
+
+        {/* LISTE ACCESSOIRE */}
+        <div className="panel-assets">
+          {activeCatg === CATG_NB.skin.nom ? (
             <div className='skin-assets'>
-            <SketchPicker
-              disableAlpha={true}
-              onChangeComplete={(color: any) => changeSkin(color.hex)}
-              presetColors={skinColors}
-              color={activeSkin} 
-            /> 
+              <SketchPicker
+                disableAlpha={true}
+                onChangeComplete={(color: any) => changeSkin(color.hex)}
+                presetColors={skinColors}
+                color={activeSkin}
+              />
             </div>
           ) : (
             <div className='list-assets'>
+              <div
+                className={`div-assets div-assets-none ${"0" === (puppet[activeCatg as keyof PuppetModel] as AccessoireModel)?.getNumero().toString() ? 'active' : ''}`}
+                onClick={() => handleNoneImgClick()}
+              >
+                <img src="none.png" className='accessoire-none' />
+              </div>
               {catg_accessoires}
             </div>
           )}
-      </div> 
+        </div>
 
-    </div>
+        {/* CATG_COLOR */}
+        {activeCatg && CATG_NB[activeCatg].color && (
+          <div className="panel-colors" id="scrollable-content">
+            <div className="catg-colors" ref={catgScrollable}>
+              {primaryColors.map((color, index) => (
+                <div
+                  key={index}
+                  className="catg-color-icon"
+                  style={{ backgroundColor: color }}
+                  onClick={() => handleColorClick(color)}
+                ></div>
+              ))}
+            </div>
+            <div className="catg-color" onClick={() => { OutilsHtmlService.handleRightArrowClick(catgScrollable) }}>
+              {showColorPicker && (
+                <div className="panel-colors-select" id="scrollable-content">
+                  <CustomColorPicker
+                    color={activeColor}
+                    onChange={(color: string) => changeColor(color)}
+                    onHide={() => setShowColorPicker(false)}
+                  />
+                </div>
+              )}
+              <div className={`panel ${CATG_NB[activeCatg].color ? 'popup color-button' : ''}`} onClick={() => { setShowColorPicker(true) }}>
+                <MdPalette color={activeColor} />
+              </div>
+            </div>
+          </div>
+        )}
+
+      </div>
     </Draggable>
   );
 };

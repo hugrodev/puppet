@@ -1,5 +1,3 @@
-import { Color } from "./outilsColor";
-
 class OutilsHtmlService {
 
     static handleLeftArrowClick(scrollable: React.RefObject<HTMLDivElement>) {

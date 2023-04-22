@@ -6,10 +6,10 @@ export class AccessoireModel {
     private categorie: Category_Item;
 
     //format hexa
-    private couleur: string = ""; 
+    private couleur: string = "";
     // format css car les couleurs sont affiché grace au filtre 
-    private couleurFilter: string = "";   
-    private skinFilter: string= "";
+    private couleurFilter: string = "";
+    private skinFilter: string = "";
 
     private numero: string = "";
 
@@ -21,40 +21,40 @@ export class AccessoireModel {
      * @param colorFilter optional
      * @param color optional, if colorfilter present required
      */
-    constructor(catg: Category_Item, skinFilter: string, numero?: string,   colorFilter?: string, color ?: string) {
-        this.categorie =  catg;
+    constructor(catg: Category_Item, skinFilter: string, numero?: string, colorFilter?: string, color?: string) {
+        this.categorie = catg;
         this.skinFilter = skinFilter;
 
-        if(numero) {
+        if (numero) {
             this.numero = numero;
-        }else if( catg && catg.nbImg && catg.nbImg > 1) {
-            this.numero = OutilsService.getRandomNumber(1,catg.nbImg).toString();
-        } else if(catg == null){ 
+        } else if (catg && catg.nbImg && catg.nbImg > 1) {
+            this.numero = OutilsService.getRandomNumber(1, catg.nbImg).toString();
+        } else if (catg == null) {
         }
-        if(colorFilter && color){ 
+        if (colorFilter && color) {
             this.couleur = color;
             this.couleurFilter = colorFilter;
-        }else {
+        } else {
             this.setCouleur(Color.getRandomHexColor());
         }
-    } 
+    }
 
     /**
      * 
      * @param couleurFilter
      */
-    setCouleurFilter(couleur: string){        
+    setCouleurFilter(couleur: string) {
         this.couleurFilter = couleur;
     }
     /**
      * 
      * @param filter
      */
-    setSkinFilter(filter: string){        
+    setSkinFilter(filter: string) {
         this.skinFilter = filter;
     }
 
-    getCouleurFilter(){
+    getCouleurFilter() {
         return this.couleurFilter;
     }
 
@@ -62,43 +62,43 @@ export class AccessoireModel {
      * 
      * @param couleur hexadecimal
      */
-    setCouleur (couleur: string){        
+    setCouleur(couleur: string) {
         this.couleur = couleur;
         this.setCouleurFilter(Color.getFilterFromHex(this.couleur));
     }
 
-    getCouleur(){
+    getCouleur() {
         return this.couleur;
     }
 
-    getCategorie(){
+    getCategorie() {
         return this.categorie;
     }
 
-    getSkinFilter(){
+    getSkinFilter() {
         return this.skinFilter;
     }
 
-    setNumero(numero: string){
+    setNumero(numero: string) {
         this.numero = numero;
     }
 
-    getNumero(){
+    getNumero() {
         return this.numero;
     }
 
-    getUrl(){
+    getUrl() {
         return this.categorie.nom + "/" + this.numero + ".png"; //+ "_" + this.couleur;
     }
-    getUrlColor(){
+    getUrlColor() {
         return this.categorie.nom + "/" + this.numero + "_color.png"; //+ "_" + this.couleur;
     }
-    getUrlSkin(){
+    getUrlSkin() {
         return this.categorie.nom + "/" + this.numero + "_skin.png"; //+ "_" + this.couleur;
     }
 
     clone(): AccessoireModel {
-        const clone = new AccessoireModel(this.categorie,  this.skinFilter, this.numero, this.couleurFilter, this.couleur);  
+        const clone = new AccessoireModel(this.categorie, this.skinFilter, this.numero, this.couleurFilter, this.couleur);
         return clone;
     }
 }

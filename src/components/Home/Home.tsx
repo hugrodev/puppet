@@ -14,13 +14,23 @@ const Home: FC<HomeProps> = () => {
     return storedPuppet || new PuppetModel();
   });
   const [showPanel, setShowPanel] = useState(false);
+  const [accessoireRandom, setAccessoireRandom] = useState(false); // Nouvelle variable d'état pour accésoire aléatoire
+
 
   function handlePuppetChange(puppet: PuppetModel) {
     setPuppetAffiche(puppet);
   }
 
-  function setRandomPuppet() {
-    setPuppetAffiche(new PuppetModel());
+  async function setRandomPuppet() {
+    if (!accessoireRandom) {
+      setAccessoireRandom(true);
+      await setTimeout(async () => {
+        setPuppetAffiche(new PuppetModel());
+        await setTimeout(() => {
+          setAccessoireRandom(false);
+        }, 2000);
+      }, 100);
+    }
   }
 
   const [isVisible, setIsVisible] = useState(false);
@@ -53,7 +63,7 @@ const Home: FC<HomeProps> = () => {
       {/* first */}
       <div className="first">
         <div className="home-img slideInUp">
-          {puppetAffiche && <Puppet puppet={puppetAffiche} />}
+          {puppetAffiche && <Puppet puppet={puppetAffiche} accessoireChange={accessoireRandom} />}
         </div>
         {!showPanel &&
           <div className="home-txt slideInRight">
@@ -62,30 +72,10 @@ const Home: FC<HomeProps> = () => {
               <p>Parce que ca fait pas de mal de l’avoir pres de soit</p>
               <div className="flex">
                 <div className="buttons">
-                  <button className="blob-btn" onClick={setRandomPuppet}>
-                    Puppet Aléatoire
-                    <span className="blob-btn__inner">
-                      <span className="blob-btn__blobs">
-                        <span className="blob-btn__blob"></span>
-                        <span className="blob-btn__blob"></span>
-                        <span className="blob-btn__blob"></span>
-                        <span className="blob-btn__blob"></span>
-                      </span>
-                    </span>
-                  </button>
+                  <button className="button-pushable primary" onClick={setRandomPuppet} ><span className="button-shadow"></span><span className="button-edge"></span><span className="button-front text">Puppet Aléatoire </span></button>
                 </div>
-                <div className="buttons" onClick={() => setShowPanel(true)}>
-                  <button className="blob-btn">
-                    Modifier Puppet
-                    <span className="blob-btn__inner">
-                      <span className="blob-btn__blobs">
-                        <span className="blob-btn__blob"></span>
-                        <span className="blob-btn__blob"></span>
-                        <span className="blob-btn__blob"></span>
-                        <span className="blob-btn__blob"></span>
-                      </span>
-                    </span>
-                  </button>
+                <div className="buttons">
+                  <button className="button-pushable secondary" onClick={() => setShowPanel(true)} ><span className="button-shadow"></span><span className="button-edge"></span><span className="button-front text">Modifier Puppet </span></button>
                 </div>
               </div>
             </div>
@@ -102,7 +92,7 @@ const Home: FC<HomeProps> = () => {
       <div className='second'>
         <div className='home-img'>
           <div className="hugo-puppet">
-            <Puppet puppet={puppetAffiche} />
+            {/* <Puppet puppet={puppetAffiche} /> */}
           </div>
           <img className='hugo-bg' src="./hugo.png"></img>
         </div>

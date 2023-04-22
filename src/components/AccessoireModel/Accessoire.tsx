@@ -1,10 +1,12 @@
 import React, { FC, useState, useEffect } from 'react';
 import './Accessoire.scss';
 import { AccessoireModel } from '../../model/AccessoireModel';
+import { Item_Style } from '../../constantes/AccessoireConst';
 
 interface AccessoireProps {
   accessoire: AccessoireModel;
   zIndex: number;
+  style?: Item_Style;
 }
 
 const Accessoire: FC<AccessoireProps> = (props) => {
@@ -23,52 +25,44 @@ const Accessoire: FC<AccessoireProps> = (props) => {
     img.src = url;
   };
 
-  const updateImageSkinStates = () => {
-    const newSrcSkin = accessoire.getUrlSkin();
-    setSrcSkin(newSrcSkin);
-    checkImageExists(newSrcSkin, (exists) => setImgExists((prev) => ({ ...prev, srcSkin: exists })));
-  };
-  const updateImageColorStates = () => {
-    const newSrcColor = accessoire.getUrlColor();
-    setSrcColor(newSrcColor);
-    checkImageExists(newSrcColor, (exists) => setImgExists((prev) => ({ ...prev, srcColor: exists })));
-  };
   const updateImageStates = () => {
     const newSrc = accessoire.getUrl();
+    const newSrcColor = accessoire.getUrlColor();
+    const newSrcSkin = accessoire.getUrlSkin();
+
     setSrc(newSrc);
+    setSrcColor(newSrcColor);
+    setSrcSkin(newSrcSkin);
+
     checkImageExists(newSrc, (exists) => setImgExists((prev) => ({ ...prev, src: exists })));
-    updateImageColorStates();
-    updateImageSkinStates();
+    checkImageExists(newSrcColor, (exists) => setImgExists((prev) => ({ ...prev, srcColor: exists })));
+    checkImageExists(newSrcSkin, (exists) => setImgExists((prev) => ({ ...prev, srcSkin: exists })));
   };
-
-  useEffect(() => {
-    updateImageSkinStates();
-    console.log("skin")
-  }, [accessoire.getSkinFilter()]);
-
-  useEffect(() => {
-    updateImageColorStates();
-    console.log("color")
-  }, [accessoire.getCouleurFilter()]);
 
   useEffect(() => {
     updateImageStates();
-    console.log("img")
-  }, [accessoire.getUrl()]);
-
-  // useEffect(() => {
-  //   updateImageStates();
-  //   console.log("all")
-  // }, [accessoire.getUrl()]);
+  }, [accessoire]);
 
   const zIndex = props.zIndex - 3;
+  const srcStyle = {
+    zIndex: zIndex,
+    left: props.style ? props.style.left : "",
+    top: props.style ? props.style.top : "",
+    transform: props.style ? props.style.transform : "",
+  };
   const colorStyle = {
     zIndex: zIndex - 1,
     filter: accessoire.getCouleurFilter(),
+    left: props.style ? props.style.left : "",
+    top: props.style ? props.style.top : "",
+    transform: props.style ? props.style.transform : "",
   };
   const skinStyle = {
     zIndex: zIndex - 2,
     filter: accessoire.getSkinFilter(),
+    left: props.style ? props.style.left : "",
+    top: props.style ? props.style.top : "",
+    transform: props.style ? props.style.transform : "",
   };
 
   return (
@@ -78,7 +72,7 @@ const Accessoire: FC<AccessoireProps> = (props) => {
           className='accessoire-img first-img'
           src={src}
           alt={category.nom}
-          style={{ zIndex }}
+          style={srcStyle}
         />
       )}
       {imgExists.srcColor && (

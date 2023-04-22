@@ -16,20 +16,27 @@ $filter in $colors {
       -webkit-transition: filter 0.3s ease-out;
     }
 
-    .blob-btn {
-      color: $color;
+    .button-edge {
+      background: darken($color, 100%);
+    }
 
-      &:before {
-        border: $color;
-      }
-
-      &__blob {
+    .button-pushable {
+      &.primary .button-front {
         background: $color;
       }
 
-      &:hover {
-        color: #FFFFFF;
+      &.secondary .button-front {
+        color: $color;
+        background: white;
+        border: solid 1px rgba(196, 196, 196, 0.158);
       }
+
+    }
+
+    .button-front {
+      will-change: transform;
+      transform: translateY(-4px);
+      transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
     }
 
     ::-webkit-scrollbar-thumb {
@@ -38,6 +45,15 @@ $filter in $colors {
 
     ::-webkit-scrollbar {
       background-color: $color;
+    }
+
+    .Puppet {
+      .loader {
+        background: linear-gradient(45deg, black, $color);
+        background-size: 400% 400%;
+        animation: rotate 3s linear infinite;
+      }
+
     }
 
     .Panel {
@@ -71,4 +87,14 @@ $filter in $colors {
     background-color: $color;
   }
 
+}
+
+@keyframes rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  100% {
+    background-position: 100% 50%;
+  }
 }

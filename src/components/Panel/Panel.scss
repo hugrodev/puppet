@@ -4,19 +4,17 @@
 
     width: 100%;
     max-width: 100%;
-    height: 80vh;
+    height: 77vh;
     max-height: 100%;
     border-radius: 24px;
     z-index: 200;
 
-    .panel-colors,
     .panel-catg {
         width: 100%;
-        height: 15%;
+        height: 10%;
         z-index: 5;
         align-items: center;
         display: inline-flex;
-
 
         .panel-left-a,
         .panel-right-a {
@@ -30,7 +28,7 @@
                 height: 60%;
                 color: white;
                 transition: transform 0.5s ease-out;
-                --webkit-transition: transform 0.5s ease-out;
+                -webkit-transition: transform 0.5s ease-out;
             }
 
             svg:hover {
@@ -42,18 +40,12 @@
         }
 
         .panel-middle-s {
+            overflow-x: scroll;
+            overflow-y: clip;
             width: 90%;
             height: fit-content;
             flex-wrap: inherit;
             display: flex;
-            overflow: hidden;
-        }
-
-    }
-
-    .panel-catg {
-        .panel-middle-s {
-            overflow-x: scroll;
 
             div {
                 padding: 1vh;
@@ -66,12 +58,13 @@
             .catg-item {
                 transition: transform 0.2s ease-out;
                 color: white;
+                min-width: 20%;
             }
 
             .catg-item:hover {
                 cursor: pointer;
                 transform: scale(1.2);
-                --webkit-transform: scale(1.2);
+                -webkit-transform: scale(1.2);
             }
 
             .active {
@@ -79,23 +72,22 @@
                 border-radius: 24px 24px 0 0;
                 color: white;
                 transform: scale(1.2);
-                --webkit-transform: scale(1.2);
+                -webkit-transform: scale(1.2);
             }
         }
     }
 
     .panel-navbar {
         height: 5%;
-        margin-top: 1vh;
+        padding-top: 1vh;
         display: flex;
         z-index: 100;
         align-items: center;
         place-content: flex-end;
         transition: fadeIn 0.5s ease-in-out;
-        --webkit-transition: fadeIn 0.5s ease-in-out;
+        -webkit-transition: fadeIn 0.5s ease-in-out;
 
-        .close-button,
-        .color-button {
+        .close-button {
             width: 5%;
             justify-content: center;
             display: flex;
@@ -104,30 +96,15 @@
             svg {
                 width: 80%;
                 transition: transform 0.3s ease-in-out;
-                --webkit-transition: transform 0.3s ease-in-out;
+                -webkit-transition: transform 0.3s ease-in-out;
                 height: 80%;
             }
 
             &:hover svg {
                 transform: scale(1.2);
-                --webkit-transform: scale(1.2);
-                --webkit-filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
+                -webkit-transform: scale(1.2);
+                -webkit-filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
                 filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.3));
-            }
-        }
-
-        .panel-colors {
-            position: absolute;
-            width: 200px;
-            right: 5%;
-            top: 10%;
-            z-index: 50;
-
-            .color-picker-container {
-                .close-button {
-                    width: 10%;
-                    float: right;
-                }
             }
         }
 
@@ -139,7 +116,6 @@
     .panel-assets {
         height: 75%;
         margin: 0 auto;
-        margin-bottom: 2vh;
         width: 90%;
         background-color: white;
         overflow-x: hidden;
@@ -151,31 +127,45 @@
             inset 5px 5px 5px -5px rgba(0, 0, 0, 0.75),
             inset 0px -5px 5px -5px rgba(0, 0, 0, 0);
 
+        .list-assets>*:first-child,
+        .list-assets>*:last-child {
+            margin-right: auto;
+        }
+
         .list-assets,
         .skin-assets {
             width: 100%;
             display: flex;
-            justify-content: flex-start;
-            align-content: flex-start;
             flex-wrap: wrap;
 
             .div-assets {
-                min-width: 13vh;
-                min-height: 13vh;
-                max-width: 33vh;
-                max-height: 33vh;
+                overflow: hidden;
                 width: 13vw;
                 height: 13vw;
-                justify-content: space-between;
                 position: relative;
                 border-radius: 2px;
 
+                &.div-assets-none {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: inherit;
+                }
+
+                img.accessoire-none {
+                    width: 60%;
+                    height: auto;
+                    position: absolute;
+                }
+
                 // zoom
-                &.active img {
+                &.active img,
+                &:hover {
+                    cursor: pointer;
                     transform: scale(1.1);
-                    --webkit-transform: scale(1.1);
+                    -webkit-transform: scale(1.1);
                     transition: all 0.3s ease-in-out;
-                    --webkit-transition: all 0.3s ease-in-out;
+                    -webkit-transition: all 0.3s ease-in-out;
                 }
 
                 // border
@@ -225,6 +215,7 @@
 
         .list-assets {
             justify-content: space-between;
+            align-items: flex-start;
         }
 
         .skin-assets {
@@ -237,27 +228,98 @@
         margin-top: 1vh;
     }
 
+    .panel-colors {
+        height: 10%;
+        display: flex;
+        width: 100%;
+
+        .catg-colors {
+            animation: popping 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+            -webkit-animation: popping 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+            width: 90%;
+            padding-left: 5%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+
+            .catg-color-icon {
+                width: 30px;
+                height: 30px;
+                margin: 5px;
+                border-radius: 15%;
+                cursor: pointer;
+                transition: transform 0.2s ease-in-out;
+                border: solid 2px black;
+
+                &:hover {
+                    transform: scale(1.2);
+                    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+                }
+            }
+        }
+
+        .catg-color {
+            width: 10%;
+
+            .color-button {
+                width: 50%;
+                height: 100%;
+
+                svg {
+                    width: 100%;
+                    height: 100%;
+
+                    &:hover {
+                        transform: scale(1.2);
+                        cursor: pointer;
+                    }
+                }
+
+            }
+
+            .panel-colors-select {
+                position: relative;
+                left: -225px;
+                top: -200px;
+                z-index: 200;
+            }
+        }
+    }
+
+
 }
 
 @media only screen and (max-width: $breakpoint-md) {
     .Panel {
         border-radius: 0px;
+        padding-top: 6vh;
 
         .panel-colors,
         .panel-catg {
             margin-top: 0;
         }
 
-        .panel-colors {
-            position: absolute;
-            width: 200px;
-            right: 15% !important;
-            top: 25% !important;
+        .catg-item {
+            min-width: 30% !important;
         }
 
-        .close-button,
-        .color-button {
-            width: 10% !important;
+        .panel-navbar {
+            display: none;
+        }
+
+        .panel-colors {
+            height: 15%;
+
+            .catg-colors {
+                overflow-x: scroll;
+                overflow-y: clip;
+            }
+
+            .catg-color-icon {
+                width: 10vw !important;
+                height: 10vw !important;
+            }
         }
 
         .panel-assets {
